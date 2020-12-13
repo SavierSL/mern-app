@@ -1,4 +1,6 @@
 {
   "mongoURI": "mongodb+srv://SavierSL:xxkaa548@mern-app.bnwc7.mongodb.net/<dbname>?retryWrites=true&w=majority",
-  "jwtSecret": "secrettoken"
+  "jwtSecret": "secrettoken",
+  "githubClientId": "2350ccf6c3ea51fc424c",
+  "githubToken": "558d56ef3f738e2bb88a6581c7694d313dac7fb2"
 }

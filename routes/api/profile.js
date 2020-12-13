@@ -8,6 +8,9 @@ const profile = require("../../models/Profile");
 const ObjectId = require("mongodb").ObjectID; // to turn id to Object ID
 const { route } = require("./users");
 const { findOne } = require("../../models/Profile");
+const request = require("request");
+const config = require("config");
+const axios = require("axios");
 
 //@route     GET api/profile/me
 //@desc      Get current users profile
@@ -334,6 +337,29 @@ router.delete("/education/:ed_id", auth, async (req, res) => {
     res.send("deleted");
   } catch (error) {
     res.status(400).send(error.message);
+  }
+});
+
+// @route     GET api/profile/github/:username
+// @desc      Get user repos from github
+// @access    Public
+router.get("/github/:username", async (req, res) => {
+  try {
+    //url
+    const uri = encodeURI(
+      `https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc`
+    );
+    //headers
+    const headers = {
+      "user-agent": "node.js",
+      Authorization: `token ${config.get("githubToken")}`,
+    };
+
+    const gitHubResponse = await axios.get(uri, { headers });
+    return res.json(gitHubResponse.data);
+  } catch (err) {
+    console.error(err.message);
+    return res.status(404).json({ msg: "No Github profile found" });
   }
 });
 
