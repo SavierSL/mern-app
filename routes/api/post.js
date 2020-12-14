@@ -49,13 +49,13 @@ router.delete("/:post_id", auth, async (req, res) => {
   }
 });
 
-//@route     DELETE api/post
+//@route     DELETE api/post/:post_id
 //@desc      DELETE a post
 //@access    Public
 router.put("/:post_id", auth, async (req, res) => {
   try {
     let post = await Post.findOne({ _id: req.params.post_id });
-    const user = await User.findOne({ _id: req.user.id });
+    const user = await User.findOne({ _id: req.user.id }).select("-password");
     const isLiked = await post.likes.filter((like) => {
       const likeID = like._id.toString();
       const userID = user._id.toString();
@@ -81,8 +81,62 @@ router.put("/:post_id", auth, async (req, res) => {
   }
 });
 
-//@route     DELETE api/post
-//@desc      DELETE a post
+//@route     POST api/comment/:post_id
+//@desc      POST make a comment
 //@access    Public
+router.post(
+  "/comment/:post_id",
+  [auth, [check("text", "Comment is required").not().isEmpty()]],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).send({ errors: errors.array() });
+    }
+    try {
+      let post = await Post.findById(req.params.post_id);
+      const userObject = await User.findById(req.user.id).select([
+        "-password",
+        "-date",
+      ]);
+      if (!post) {
+        return res.status(400).send("Invalid ID");
+      }
+      const comment = {
+        user: req.user.id,
+        text: req.body.text,
+        avatar: userObject.avatar,
+        name: userObject.name,
+      };
+      post.comments.unshift(comment);
+      const newPost = await post.save();
+      res.send(newPost.comments);
+    } catch (e) {
+      res.status(400).send(e.message);
+    }
+  }
+);
+
+//@route     DELETE api/comment/:post_id/:comment_id
+//@desc      DELETE a comment
+//@access    Public
+router.delete("/comment/:post_id/:comment_id", auth, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.post_id);
+    if (!post) {
+      return res.status(400).send("Post can't be found");
+    }
+    const newComments = post.comments.filter((comment) => {
+      return comment.id != req.params.comment_id;
+    });
+    if (newComments.length === post.comments.length) {
+      return res.status(400).send("There is no comment to delete");
+    }
+    post.comments = newComments;
+    await post.save();
+    res.send(post);
+  } catch (error) {
+    res.status(400).send({ errors: error.message });
+  }
+});
 
 module.exports = router;
