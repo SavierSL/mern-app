@@ -1,0 +1,23 @@
+.register {
+  height: 100vh;
+  width: 100vw;
+  &__container {
+    width: 50%;
+    margin: auto;
+    margin-top: 8%;
+    text-align: center;
+    @include respond(phone) {
+      width: 80%;
+      margin-top: 30%;
+    }
+    @include respond(tab-port) {
+      width: 80%;
+    }
+    @include respond(tab-land) {
+      width: 60%;
+    }
+  }
+  &__form {
+    margin-top: 5rem;
+  }
+}

@@ -1,0 +1,17 @@
+.heading {
+  &-primary {
+    font-size: 4rem;
+    font-family: "Montserrat", sans-serif;
+  }
+  &-sub {
+    font-size: 2rem;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 300;
+  }
+}
+.span-link {
+  display: block;
+  margin: 2rem;
+  font-weight: 500;
+  font-size: 1.5rem;
+}
