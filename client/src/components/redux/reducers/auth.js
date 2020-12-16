@@ -1,5 +1,5 @@
 import * as types from "../actions/types";
-
+//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWZkYTM4Zjk4MTc1NzEyZjAwOWVmY2FlIn0sImlhdCI6MTYwODEzNjk1NCwiZXhwIjoxNjA4MTcyOTU0fQ.qK7hD75OOzPIwdy8dnJDwdmoSJzj930vR4pT1XDtQKw
 const initialState = {
   token: localStorage.getItem("token"),
   isAuth: false,

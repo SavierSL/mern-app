@@ -41,27 +41,30 @@ const registerData = async (name, email, password) => {
   // }
   const body = { name, email, password };
 
-  console.log(body);
-  return fetch("/api/users", {
+  console.log(name);
+  const token = await fetch("/api/users", {
     method: "POST",
     headers: {
       "Content-type": "application/json",
     },
     body: JSON.stringify(body),
   })
-    .then((res) => res.json())
+    .then(async (res) => {
+      const data = await res.json();
+      return data;
+    })
     .catch((e) => {
-      throw e;
+      console.log("error boss");
     });
+  return token;
 };
 
 function* registerSaga(action) {
   const { name, email, password } = action.payload;
 
   try {
-    const res = yield call(registerData(name, email, password));
-    console.log(res);
-    yield put({ type: type.REGISTER_SUCCESS, payload: res.data });
+    const res = yield registerData(name, email, password);
+    yield put({ type: type.REGISTER_SUCCESS, payload: res });
   } catch (error) {
     yield put({ type: type.REGISTER_FAILED });
   }
