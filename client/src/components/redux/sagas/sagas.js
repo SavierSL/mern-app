@@ -74,6 +74,13 @@ function* registerSaga(action) {
 function* watchRegisterSaga() {
   yield takeEvery(type.REGISTER_SAGA, registerSaga);
 }
+//REMOVE ALERT EMAIL
+function* removeEmailAlertSaga() {
+  yield put({ type: type.REMOVE_EMAIL_ALERT });
+}
+function* watchRemoveEmailAlertSaga() {
+  yield takeEvery(type.REMOVE_EMAIL_ALERT_SAGA, removeEmailAlertSaga);
+}
 
 //Log In
 const logInData = async (email, password) => {
@@ -128,5 +135,6 @@ export default function* rootSaga() {
     watchRegisterSaga(),
     watchLogInSaga(),
     watchLogOutSaga(),
+    watchRemoveEmailAlertSaga(),
   ]);
 }

@@ -40,6 +40,16 @@ const auth = (state = initialState, action) => {
         msg: payload.errors,
       };
     }
+    case types.REMOVE_EMAIL_ALERT: {
+      localStorage.removeItem("token");
+      return {
+        ...state,
+        token: null,
+        isAuth: false,
+        loading: false,
+        msg: [],
+      };
+    }
     case types.LOG_IN_FAILED: {
       localStorage.removeItem("token");
       return {

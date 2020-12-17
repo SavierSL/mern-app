@@ -58,15 +58,15 @@ const Header = () => {
                     required
                   />
                   <button>Log In</button>
-                  <button style={{ backgroundColor: "#30475e" }}>
-                    <Link
-                      to="/register"
-                      style={{ color: "white", textDecoration: "none" }}
-                    >
-                      Create an account
-                    </Link>
-                  </button>
                 </form>
+                <button style={{ backgroundColor: "#30475e" }}>
+                  <Link
+                    to="/register"
+                    style={{ color: "white", textDecoration: "none" }}
+                  >
+                    Create an account
+                  </Link>
+                </button>
               </div>
             </div>
           </div>

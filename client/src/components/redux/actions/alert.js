@@ -12,3 +12,9 @@ export const removeAlert = () => {
     type: type.REMOVE_ALERT_SAGA,
   };
 };
+
+export const removeEmailAlert = () => {
+  return {
+    type: type.REMOVE_EMAIL_ALERT_SAGA,
+  };
+};

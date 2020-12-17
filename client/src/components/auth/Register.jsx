@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { setAlert, removeAlert } from "../redux/actions/alert";
+import {
+  setAlert,
+  removeAlert,
+  removeEmailAlert,
+} from "../redux/actions/alert";
 import { registerAuth } from "../redux/actions/auth";
 import { useSelector, useDispatch } from "react-redux";
 import Alert from "../Layout/Alert";
@@ -17,9 +21,13 @@ const Register = () => {
 
   const handleForm = (e) => {
     e.preventDefault();
+
     setRegister({ ...register, [e.target.name]: e.target.value });
   };
-
+  const handleFocus = () => {
+    console.log("focus");
+    dispatch(removeEmailAlert());
+  };
   console.log(register);
   const { name, email, password, conPassword } = register;
   useEffect(() => {
@@ -61,6 +69,7 @@ const Register = () => {
                 value={name}
                 onChange={(e) => handleForm(e)}
                 required
+                onClick={() => handleFocus()}
               />
               <input
                 type="email"

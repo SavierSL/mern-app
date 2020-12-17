@@ -10,3 +10,5 @@ export const LOG_IN_SUCCESS = "LOG_IN_SUCCESS";
 export const LOG_IN_FAILED = "LOG_IN_FAILED";
 export const LOG_OUT = "LOG_OUT";
 export const LOG_OUT_SAGA = "LOG_OUT_SAGA";
+export const REMOVE_EMAIL_ALERT = "REMOVE_EMAIL_ALERT";
+export const REMOVE_EMAIL_ALERT_SAGA = "REMOVE_EMAIL_ALERT_SAGA";
