@@ -41,7 +41,6 @@ const registerData = async (name, email, password) => {
   // }
   const body = { name, email, password };
 
-  console.log(name);
   const token = await fetch("/api/users", {
     method: "POST",
     headers: {
@@ -54,7 +53,7 @@ const registerData = async (name, email, password) => {
       return data;
     })
     .catch((e) => {
-      console.log("error boss");
+      throw e;
     });
   return token;
 };
@@ -64,6 +63,9 @@ function* registerSaga(action) {
 
   try {
     const res = yield registerData(name, email, password);
+    if (res.hasOwnProperty("errors")) {
+      return yield put({ type: type.REGISTER_FAILED, payload: res });
+    }
     yield put({ type: type.REGISTER_SUCCESS, payload: res });
   } catch (error) {
     yield put({ type: type.REGISTER_FAILED });
@@ -73,6 +75,58 @@ function* watchRegisterSaga() {
   yield takeEvery(type.REGISTER_SAGA, registerSaga);
 }
 
+//Log In
+const logInData = async (email, password) => {
+  const body = { email, password };
+  console.log(body);
+  const token = await fetch("/api/auth/login", {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+  })
+    .then(async (res) => {
+      const data = await res.json();
+      return data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+  return token;
+};
+
+function* logInSaga(action) {
+  const { email, password } = action.payload;
+
+  try {
+    const res = yield logInData(email, password);
+    if (res.hasOwnProperty("errors")) {
+      return yield put({ type: type.LOG_IN_FAILED, payload: res });
+    }
+    yield put({ type: type.LOG_IN_SUCCESS, payload: res });
+  } catch (error) {
+    yield put({ type: type.LOG_IN_FAILED, payload: error });
+  }
+}
+function* watchLogInSaga() {
+  yield takeEvery(type.LOG_IN_SAGA, logInSaga);
+}
+
+//LOG OUT
+function* logOutSaga() {
+  yield put({ type: type.LOG_OUT });
+}
+
+function* watchLogOutSaga() {
+  yield takeEvery(type.LOG_OUT_SAGA, logOutSaga);
+}
 export default function* rootSaga() {
-  yield all([watchSetAlertSaga(), watchRemoveAlert(), watchRegisterSaga()]);
+  yield all([
+    watchSetAlertSaga(),
+    watchRemoveAlert(),
+    watchRegisterSaga(),
+    watchLogInSaga(),
+    watchLogOutSaga(),
+  ]);
 }

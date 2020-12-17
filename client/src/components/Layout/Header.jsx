@@ -1,7 +1,29 @@
-import React from "react";
-import { Link } from "react-router-dom";
-
-const header = () => {
+import React, { useState } from "react";
+import { Link, Redirect } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logInAuth } from "../redux/actions/auth";
+import Alert from "../Layout/Alert";
+const Header = () => {
+  const [logIn, setLogIn] = useState({
+    email: "",
+    password: "",
+  });
+  const error = useSelector((state) => state.auth.msg);
+  const auth = useSelector((state) => state.auth.isAuth);
+  const dispatch = useDispatch();
+  console.log(error);
+  const handleLogInForm = (e) => {
+    e.preventDefault();
+    setLogIn({ ...logIn, [e.target.name]: e.target.value });
+  };
+  const { email, password } = logIn;
+  const handleLogInBtn = (e) => {
+    e.preventDefault();
+    dispatch(logInAuth({ email, password }));
+  };
+  if (auth) {
+    return <Redirect to="/dashboard" />;
+  }
   return (
     <>
       <div className="header">
@@ -11,11 +33,30 @@ const header = () => {
             <h1 className="heading-sub">connect with your friends</h1>
           </div>
           <div className="header__loginForm">
+            <Alert alert={error} />
             <div className="header__form">
               <div className="form">
-                <form className="form-row" action="submit">
-                  <input type="text" placeholder="Email" />
-                  <input type="password" placeholder="Password" />
+                <form
+                  className="form-row"
+                  action="submit"
+                  onSubmit={(e) => handleLogInBtn(e)}
+                >
+                  <input
+                    type="text"
+                    placeholder="Email"
+                    name="email"
+                    value={logIn.email}
+                    onChange={(e) => handleLogInForm(e)}
+                    required
+                  />
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    name="password"
+                    value={logIn.password}
+                    onChange={(e) => handleLogInForm(e)}
+                    required
+                  />
                   <button>Log In</button>
                   <button style={{ backgroundColor: "#30475e" }}>
                     <Link
@@ -35,4 +76,4 @@ const header = () => {
   );
 };
 
-export default header;
+export default Header;

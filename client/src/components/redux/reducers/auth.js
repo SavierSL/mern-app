@@ -5,6 +5,7 @@ const initialState = {
   isAuth: false,
   loading: true,
   user: null,
+  msg: [],
 };
 
 const auth = (state = initialState, action) => {
@@ -19,7 +20,37 @@ const auth = (state = initialState, action) => {
         isAuth: true,
       };
     }
+    case types.LOG_IN_SUCCESS: {
+      localStorage.setItem("token", payload.token);
+      return {
+        ...state,
+        ...payload,
+        loading: false,
+        isAuth: true,
+        msg: [],
+      };
+    }
     case types.REGISTER_FAILED: {
+      localStorage.removeItem("token");
+      return {
+        ...state,
+        token: null,
+        isAuth: false,
+        loading: false,
+        msg: payload.errors,
+      };
+    }
+    case types.LOG_IN_FAILED: {
+      localStorage.removeItem("token");
+      return {
+        ...state,
+        token: null,
+        isAuth: false,
+        loading: false,
+        msg: payload.errors,
+      };
+    }
+    case types.LOG_OUT: {
       localStorage.removeItem("token");
       return {
         ...state,

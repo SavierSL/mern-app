@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import { setAlert, removeAlert } from "../redux/actions/alert";
 import { registerAuth } from "../redux/actions/auth";
 import { useSelector, useDispatch } from "react-redux";
+import Alert from "../Layout/Alert";
 const Register = () => {
   const dispatch = useDispatch();
   const alert = useSelector((state) => state.alert);
-  const auth = useSelector((state) => state.auth);
+  const auth = useSelector((state) => state.auth.msg);
   console.log(alert);
   const [register, setRegister] = useState({
     name: "",
@@ -30,7 +31,6 @@ const Register = () => {
     }
   }, [password, conPassword]);
   const handRegisterBtn = (e) => {
-    console.log("Password");
     e.preventDefault();
     if (password !== conPassword) {
       dispatch(setAlert("Password don't match", "danger"));
@@ -45,7 +45,10 @@ const Register = () => {
       <div className="register">
         <div className="register__container">
           <h1 className="heading-primary">Register</h1>
+
           <div className="register__form">
+            <Alert alert={alert} />
+            <Alert alert={auth} />
             <form
               className="form-row"
               action="submit"
