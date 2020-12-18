@@ -23,7 +23,6 @@ router.get("/", auth, async (req, res) => {
   } catch (e) {
     res.status(500).send(e);
   }
-  res.send("Auth route");
 });
 
 // TOMORROW LET"S CHECK IF THE OBJECTID OF THE PROFILEMODEL IS SAME IN THE USERMODEL

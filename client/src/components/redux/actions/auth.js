@@ -13,3 +13,10 @@ export const logInAuth = ({ email, password }) => {
     payload: { email, password },
   };
 };
+
+export const getUserName = (token) => {
+  return {
+    type: types.GET_USER_SAGA,
+    payload: token,
+  };
+};

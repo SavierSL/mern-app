@@ -95,6 +95,7 @@ const logInData = async (email, password) => {
   })
     .then(async (res) => {
       const data = await res.json();
+
       return data;
     })
     .catch((error) => {
@@ -128,6 +129,67 @@ function* logOutSaga() {
 function* watchLogOutSaga() {
   yield takeEvery(type.LOG_OUT_SAGA, logOutSaga);
 }
+
+//GET USER
+const getUser = async (token) => {
+  console.log(token);
+
+  let tokenData = fetch("/api/auth", {
+    method: "GET",
+    headers: {
+      "x-auth-token": token,
+    },
+  })
+    .then(async (res) => {
+      const data = await res.json();
+      console.log(data);
+      return data;
+    })
+    .catch((e) => {
+      throw e;
+    });
+  return tokenData;
+};
+
+function* getUserSaga(action) {
+  try {
+    const res = yield getUser(action.payload);
+    yield put({ type: type.GET_USER, payload: res });
+  } catch (error) {
+    throw error;
+  }
+}
+function* watchGetUserSaga() {
+  yield takeEvery(type.GET_USER_SAGA, getUserSaga);
+}
+
+//createProfile
+const createProfile = async (profileData, token) => {
+  const fetchDate = fetch("/api/profile", {
+    headers: {
+      "x-auth-token": token,
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(profileData)
+      .then(async (res) => {
+        const data = res.json();
+        console.log(data);
+        return data;
+      })
+      .catch((e) => {
+        throw e;
+      }),
+  });
+};
+function* createProfileSaga(action) {
+  const { payload } = action;
+  const res = yield createProfile(payload.profileData, payload.token);
+  yield put({ type: type.CREATE_PROFILE_SUCCESS, payload: res });
+}
+function* watchCreateProfileSaga() {
+  yield takeEvery(type.CREATE_PROFILE_SAGA, createProfileSaga);
+}
+
 export default function* rootSaga() {
   yield all([
     watchSetAlertSaga(),
@@ -136,5 +198,7 @@ export default function* rootSaga() {
     watchLogInSaga(),
     watchLogOutSaga(),
     watchRemoveEmailAlertSaga(),
+    watchGetUserSaga(),
+    watchCreateProfileSaga(),
   ]);
 }

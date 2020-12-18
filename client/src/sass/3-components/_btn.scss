@@ -1,0 +1,23 @@
+.btn-prim {
+  display: block;
+  padding: 1rem;
+  text-decoration: none;
+  font-family: "Montserrat", sans-serif;
+  margin-top: 1rem;
+  width: 15rem;
+  height: 4rem;
+  border: none;
+  background-color: $secondary-color;
+  border-radius: 1rem;
+  color: white;
+  cursor: pointer;
+  transition: all 0.5s;
+  &:hover {
+    background-color: red;
+  }
+  a {
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+  }
+}

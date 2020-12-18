@@ -4,7 +4,6 @@ const initialState = {
   token: localStorage.getItem("token"),
   isAuth: false,
   loading: true,
-  user: null,
   msg: [],
 };
 
@@ -67,6 +66,12 @@ const auth = (state = initialState, action) => {
         token: null,
         isAuth: false,
         loading: false,
+      };
+    }
+    case types.GET_USER: {
+      return {
+        ...state,
+        user: payload.name,
       };
     }
     default: {

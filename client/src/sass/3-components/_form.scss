@@ -1,8 +1,19 @@
 .form {
   &-row {
-    input {
+    text-align: left;
+    input,
+    select {
       display: block;
       height: 4.5rem;
+      width: 100%;
+      margin-top: 1rem;
+      padding: 1rem;
+      border: $secondary-color 1px solid;
+      border-radius: 1rem;
+    }
+    textarea {
+      display: block;
+      height: 6rem;
       width: 100%;
       margin-top: 1rem;
       padding: 1rem;
@@ -23,6 +34,30 @@
       &:hover {
         background-color: red;
       }
+    }
+    &__form-text {
+      font-size: 1.5rem;
+    }
+    &__form-group {
+      margin-bottom: 2rem;
+    }
+  }
+}
+.social {
+  &-group:not(:last-child) {
+    margin-bottom: 2rem;
+  }
+  &-group {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    i {
+      width: 2rem;
+    }
+
+    input {
+      margin-left: 5rem;
+      width: 100%;
     }
   }
 }
