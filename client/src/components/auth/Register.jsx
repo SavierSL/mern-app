@@ -65,7 +65,7 @@ const Register = () => {
               <input
                 type="text"
                 name="name"
-                placeholder="Email"
+                placeholder="Name"
                 value={name}
                 onChange={(e) => handleForm(e)}
                 required

@@ -4,11 +4,18 @@ const Alert = ({ alert }) => {
   let alertMsg = "";
   if (alert.length !== 0) {
     alertMsg = (
-      <div className="alert">
+      <>
         {alert.map((msg) => {
-          return <h2 className="alet__msg">{msg.msg}</h2>;
+          return (
+            <>
+              {" "}
+              <div style={{ marginTop: "1rem" }} className="alert">
+                <h2 className="alert__msg">{msg.msg}</h2>
+              </div>
+            </>
+          );
         })}
-      </div>
+      </>
     );
   } else {
     alertMsg = "";

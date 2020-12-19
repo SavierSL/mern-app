@@ -14,10 +14,15 @@ const Dashboard = () => {
     dispatch(logOut());
   };
   dispatch(getUserName(token));
+  useEffect(() => {
+    if (auth === false) {
+      return <Redirect to="/" />;
+    }
+  }, [auth]);
+  console.log(token);
   if (auth === false) {
     return <Redirect to="/" />;
   }
-  console.log(token);
 
   return (
     <>

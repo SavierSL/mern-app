@@ -199,6 +199,9 @@ function* createProfileSaga(action) {
   };
   try {
     const res = yield createProfile(data, payload.token);
+    if (res.hasOwnProperty("errors")) {
+      return yield put({ type: type.CREATE_PROFILE_FAILED, payload: res });
+    }
     yield put({ type: type.CREATE_PROFILE_SUCCESS, payload: res });
   } catch (error) {
     yield put({ type: type.CREATE_PROFILE_FAILED });

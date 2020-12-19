@@ -2,6 +2,7 @@ import * as types from "../actions/types";
 const initialState = {
   profile: {},
   loading: true,
+  errors: [],
 };
 
 export default function profile(state = initialState, action) {
@@ -19,6 +20,7 @@ export default function profile(state = initialState, action) {
         ...state,
         profile: {},
         loading: false,
+        errors: [...payload.errors],
       };
     }
     default: {

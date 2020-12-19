@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { createProfile } from "../redux/actions/profile";
 import { useSelector, useDispatch } from "react-redux";
+import Alert from "../Layout/Alert";
 
 const CreateProfile = () => {
   const [profileForm, setProfileForm] = useState({
@@ -19,6 +20,7 @@ const CreateProfile = () => {
   });
   const [social, setSocial] = useState(false);
   const token = useSelector((state) => state.auth.token);
+  const errors = useSelector((state) => state.profile.errors);
   const dispatch = useDispatch();
 
   //handling form
@@ -53,7 +55,10 @@ const CreateProfile = () => {
   return (
     <>
       <div className="createProfile">
-        <h1 className="heading-primary">Create Profile</h1>
+        <h1 style={{ marginBottom: "4rem" }} className="heading-primary">
+          Create Profile
+        </h1>
+        <Alert alert={errors} />
         <div className="createProfile__form">
           <form
             action=""
