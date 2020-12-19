@@ -206,7 +206,7 @@ const CreateProfile = () => {
             ) : (
               ""
             )}
-            <button>Submit</button>
+            <button onClick={(e) => handleSubmitForm(e)}>Submit</button>
           </form>
         </div>
       </div>

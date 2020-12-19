@@ -4,13 +4,13 @@ const initialState = {
   loading: true,
 };
 
-export function profile(state = initialState, action) {
+export default function profile(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case types.CREATE_PROFILE_SUCCESS: {
       return {
         ...state,
-        profile: { payload },
+        profile: payload,
         loading: false,
       };
     }

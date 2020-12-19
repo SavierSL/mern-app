@@ -165,26 +165,44 @@ function* watchGetUserSaga() {
 
 //createProfile
 const createProfile = async (profileData, token) => {
-  const fetchDate = fetch("/api/profile", {
+  const fetchData = fetch("/api/profile", {
+    method: "POST",
     headers: {
       "x-auth-token": token,
       "Content-type": "application/json",
     },
-    body: JSON.stringify(profileData)
-      .then(async (res) => {
-        const data = res.json();
-        console.log(data);
-        return data;
-      })
-      .catch((e) => {
-        throw e;
-      }),
-  });
+    body: JSON.stringify(profileData),
+  })
+    .then(async (res) => {
+      const data = await res.json();
+      console.log(data);
+      return data;
+    })
+    .catch((e) => {
+      console.log(e);
+      throw e;
+    });
+  return fetchData;
 };
 function* createProfileSaga(action) {
   const { payload } = action;
-  const res = yield createProfile(payload.profileData, payload.token);
-  yield put({ type: type.CREATE_PROFILE_SUCCESS, payload: res });
+  const { profileData } = action.payload;
+  const { twitter, facebook, linkedin, youtube } = profileData;
+  const data = {
+    ...profileData,
+    social: {
+      twitter,
+      facebook,
+      linkedin,
+      youtube,
+    },
+  };
+  try {
+    const res = yield createProfile(data, payload.token);
+    yield put({ type: type.CREATE_PROFILE_SUCCESS, payload: res });
+  } catch (error) {
+    yield put({ type: type.CREATE_PROFILE_FAILED });
+  }
 }
 function* watchCreateProfileSaga() {
   yield takeEvery(type.CREATE_PROFILE_SAGA, createProfileSaga);

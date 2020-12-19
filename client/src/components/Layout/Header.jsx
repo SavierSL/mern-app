@@ -59,7 +59,10 @@ const Header = () => {
                   />
                   <button>Log In</button>
                 </form>
-                <button style={{ backgroundColor: "#30475e" }}>
+                <button
+                  className="create"
+                  style={{ backgroundColor: "#30475e" }}
+                >
                   <Link
                     to="/register"
                     style={{ color: "white", textDecoration: "none" }}
