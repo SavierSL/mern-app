@@ -52,7 +52,7 @@ const Register = () => {
     <>
       <div className="register">
         <div className="register__container">
-          <h1 className="heading-primary">Register</h1>
+          <h1 className="heading-primary">Sign Up</h1>
 
           <div className="register__form">
             <Alert alert={alert} />
