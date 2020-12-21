@@ -18,3 +18,9 @@ export const removeEmailAlert = () => {
     type: type.REMOVE_EMAIL_ALERT_SAGA,
   };
 };
+
+export const removeCreateProfileAlert = () => {
+  return {
+    type: type.REMOVE_CREATE_PROFILE_ALERT_SAGA,
+  };
+};

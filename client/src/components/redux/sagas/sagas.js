@@ -211,6 +211,50 @@ function* watchCreateProfileSaga() {
   yield takeEvery(type.CREATE_PROFILE_SAGA, createProfileSaga);
 }
 
+//profileAlert
+function* removeCreateProfileAlertSaga() {
+  yield put({ type: type.REMOVE_CREATE_PROFILE_ALERT });
+}
+function* watchRemoveCreateProfileAlertSaga() {
+  yield takeEvery(
+    type.REMOVE_CREATE_PROFILE_ALERT_SAGA,
+    removeCreateProfileAlertSaga
+  );
+}
+
+//Get profileByID
+const getProfileById = (token) => {
+  const profileData = fetch(`/api/profile/me`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "x-auth-token": token,
+    },
+  })
+    .then(async (res) => {
+      const data = await res.json();
+      console.log(data);
+      return data;
+    })
+    .catch((e) => {
+      console.log(e);
+      throw e;
+    });
+  return profileData;
+};
+function* getProfileByIdSaga(action) {
+  const { payload } = action;
+  try {
+    const res = yield getProfileById(payload);
+    yield put({ type: type.GET_PROFILE, payload: res });
+  } catch (error) {
+    yield put({ type: type.GET_PROFILE, payload: error });
+  }
+}
+function* watchGetProfileByIdSaga() {
+  yield takeEvery(type.GET_PROFILE_SAGA, getProfileByIdSaga);
+}
+
 export default function* rootSaga() {
   yield all([
     watchSetAlertSaga(),
@@ -221,5 +265,7 @@ export default function* rootSaga() {
     watchRemoveEmailAlertSaga(),
     watchGetUserSaga(),
     watchCreateProfileSaga(),
+    watchRemoveCreateProfileAlertSaga(),
+    watchGetProfileByIdSaga(),
   ]);
 }

@@ -1,8 +1,9 @@
 import * as types from "../actions/types";
 const initialState = {
-  profile: {},
+  profile: null,
   loading: true,
   errors: [],
+  isProfile: false,
 };
 
 export default function profile(state = initialState, action) {
@@ -12,6 +13,7 @@ export default function profile(state = initialState, action) {
       return {
         ...state,
         profile: payload,
+        isProfile: true,
         loading: false,
       };
     }
@@ -20,7 +22,17 @@ export default function profile(state = initialState, action) {
         ...state,
         profile: {},
         loading: false,
+        isProfile: false,
         errors: [...payload.errors],
+      };
+    }
+    case types.REMOVE_CREATE_PROFILE_ALERT: {
+      return {
+        ...state,
+        profile: {},
+        loading: false,
+        isProfile: false,
+        errors: [],
       };
     }
     default: {

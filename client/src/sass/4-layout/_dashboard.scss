@@ -12,4 +12,13 @@
   &__welcome {
     margin-top: 2rem;
   }
+  &__editProfile {
+    display: flex;
+    button:not(:first-child) {
+      margin-left: 1rem;
+    }
+    button {
+      width: 25rem;
+    }
+  }
 }

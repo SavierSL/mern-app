@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
 import { createProfile } from "../redux/actions/profile";
 import { useSelector, useDispatch } from "react-redux";
 import Alert from "../Layout/Alert";
+import { removeCreateProfileAlert } from "../redux/actions/alert";
 
 const CreateProfile = () => {
   const [profileForm, setProfileForm] = useState({
@@ -21,7 +23,17 @@ const CreateProfile = () => {
   const [social, setSocial] = useState(false);
   const token = useSelector((state) => state.auth.token);
   const errors = useSelector((state) => state.profile.errors);
+  const isProfile = useSelector((state) => state.profile.isProfile);
   const dispatch = useDispatch();
+  console.log(isProfile);
+  useEffect(() => {
+    if (isProfile === true) {
+      return <Redirect to="/dashboard" />;
+    }
+  }, [isProfile]);
+  if (isProfile === true) {
+    return <Redirect to="/dashboard" />;
+  }
 
   //handling form
   const handleCreateForm = (e) => {
@@ -52,6 +64,11 @@ const CreateProfile = () => {
     e.preventDefault();
     dispatch(createProfile(profileForm, token));
   };
+  const handleOnClickSelect = (e) => {
+    e.preventDefault();
+    dispatch(removeCreateProfileAlert());
+  };
+
   return (
     <>
       <div className="createProfile">
@@ -70,6 +87,7 @@ const CreateProfile = () => {
                 name="status"
                 value={status}
                 onChange={(e) => handleCreateForm(e)}
+                onClick={(e) => handleOnClickSelect(e)}
               >
                 <option>* Select Professional Status</option>
                 <option value="Developer">Developer</option>
@@ -128,6 +146,7 @@ const CreateProfile = () => {
                 name="skills"
                 value={skills}
                 onChange={(e) => handleCreateForm(e)}
+                onClick={(e) => handleOnClickSelect(e)}
               />
               <small className="form-row__form-text">
                 Please use comma separated values (eg. CSS, JS, REACT)
