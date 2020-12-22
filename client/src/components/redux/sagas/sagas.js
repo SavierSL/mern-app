@@ -233,11 +233,10 @@ const getProfileById = (token) => {
   })
     .then(async (res) => {
       const data = await res.json();
-      console.log(data);
+
       return data;
     })
     .catch((e) => {
-      console.log(e);
       throw e;
     });
   return profileData;
@@ -290,6 +289,41 @@ function* watchAddEducationSaga() {
   yield takeEvery(type.SEND_EDUCATION_DATA_SAGA, addEducationSaga);
 }
 
+//Delete Education
+const deleteEducData = (token, id) => {
+  console.log(id);
+  console.log(token);
+  const toDelete = fetch(`api/profile/education/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      "x-auth-token": token,
+    },
+  })
+    .then(async (res) => {
+      const data = await res.json();
+      console.log(data);
+      return data;
+    })
+    .catch((e) => {
+      console.log(e);
+      throw e;
+    });
+  return toDelete;
+};
+function* deleteEducationSaga(action) {
+  const { id, token } = action.payload;
+  try {
+    const res = yield deleteEducData(token, id);
+    yield put({ type: type.DELETE_EDUCATION_DATA, payload: res });
+  } catch (error) {
+    throw error;
+  }
+}
+function* watchDeleteEducationSaga() {
+  yield takeEvery(type.DELETE_EDUCATION_DATA_SAGA, deleteEducationSaga);
+}
+
 export default function* rootSaga() {
   yield all([
     watchSetAlertSaga(),
@@ -303,5 +337,6 @@ export default function* rootSaga() {
     watchRemoveCreateProfileAlertSaga(),
     watchGetProfileByIdSaga(),
     watchAddEducationSaga(),
+    watchDeleteEducationSaga(),
   ]);
 }

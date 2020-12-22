@@ -328,13 +328,13 @@ router.delete("/education/:ed_id", auth, async (req, res) => {
     //then assign the new value to the profile
     profileToDeleteEd.education = newEd;
     //find the profile again and update it
-    await Profile.findOneAndUpdate(
+    const profile = await Profile.findOneAndUpdate(
       { user: req.user.id },
       { $set: profileToDeleteEd },
       { new: true }
     );
     //send deleted
-    res.send("deleted");
+    res.send(profile);
   } catch (error) {
     res.status(400).send(error.message);
   }

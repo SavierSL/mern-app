@@ -4,7 +4,9 @@ import { Redirect, Link } from "react-router-dom";
 import { logOut } from "../redux/actions/dashboard";
 import { getUserName } from "../redux/actions/auth";
 import { removeCreateProfileAlert } from "../redux/actions/alert";
+import { deleteEducation } from "../redux/actions/education";
 import { getProfileById } from "../redux/actions/profile";
+
 import EducationCredetials from "./Credentials/EducationCredentials";
 import profile from "../redux/reducers/profile";
 
@@ -16,6 +18,7 @@ const Dashboard = () => {
   const isProfile = useSelector((state) => state.profile.isProfile);
   const loading = useSelector((state) => state.dashboard.loading);
   const profileData = useSelector((state) => state.dashboard.profile);
+
   const profileEduc = useSelector((state) => state.dashboard.profile);
 
   const handleLogOutBtn = (e) => {
@@ -26,17 +29,23 @@ const Dashboard = () => {
   if (isProfile === true) {
     dispatch(removeCreateProfileAlert());
   }
-  dispatch(getUserName(token));
+
   useEffect(() => {
     if (auth === false) {
       return <Redirect to="/" />;
     }
     dispatch(getProfileById(token));
-  }, [auth]);
-  console.log(token);
+    dispatch(getUserName(token));
+  }, []);
+
   if (auth === false) {
     return <Redirect to="/" />;
   }
+
+  const handleDeleteButton = (id) => {
+    dispatch(deleteEducation({ token, id }));
+    console.log("clicked");
+  };
 
   return (
     <>
@@ -81,13 +90,38 @@ const Dashboard = () => {
             )}
           </div>
 
-          {profileData.hasOwnProperty("msg") && !loading ? (
-            ""
-          ) : profileData.education.length === 0 ? (
-            ""
-          ) : (
-            <EducationCredetials profileData={profileData.education} />
-          )}
+          {profileData.hasOwnProperty("msg") && !loading
+            ? ""
+            : profileData.education.length === 0
+            ? ""
+            : profileData.education.map((data) => {
+                const {
+                  _id,
+                  from,
+                  to,
+                  school,
+                  current,
+                  description,
+                  degree,
+                } = data;
+                return (
+                  <>
+                    <EducationCredetials
+                      key={_id}
+                      id={_id}
+                      from={from}
+                      to={to}
+                      school={school}
+                      current={current}
+                      description={description}
+                      degree={degree}
+                    />
+                    <div className="Credentials__table-delete">
+                      <h1 onClick={() => handleDeleteButton(_id)}>DEL</h1>
+                    </div>
+                  </>
+                );
+              })}
         </div>
       )}
     </>

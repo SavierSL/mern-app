@@ -6,3 +6,10 @@ export const sendEducationData = ({ token, educationData }) => {
     payload: { token, educationData },
   };
 };
+
+export const deleteEducation = ({ token, id }) => {
+  return {
+    type: type.DELETE_EDUCATION_DATA_SAGA,
+    payload: { token, id },
+  };
+};

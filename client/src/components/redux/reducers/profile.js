@@ -36,7 +36,10 @@ export default function profile(state = initialState, action) {
       };
     }
     default: {
-      return state;
+      return {
+        ...state,
+        loading: false,
+      };
     }
   }
 }
