@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
 import {
   setAlert,
   removeAlert,
@@ -7,7 +8,9 @@ import {
 import { registerAuth } from "../redux/actions/auth";
 import { useSelector, useDispatch } from "react-redux";
 import Alert from "../Layout/Alert";
+
 const Register = () => {
+  const isAuth = useSelector((state) => state.auth.isAuth);
   const dispatch = useDispatch();
   const alert = useSelector((state) => state.alert);
   const auth = useSelector((state) => state.auth.msg);
@@ -38,6 +41,9 @@ const Register = () => {
       console.log("Password match");
     }
   }, [password, conPassword]);
+  if (isAuth === true) {
+    return <Redirect to="/dashboard" />;
+  }
   const handRegisterBtn = (e) => {
     e.preventDefault();
     if (password !== conPassword) {

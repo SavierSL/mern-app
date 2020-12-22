@@ -255,6 +255,41 @@ function* watchGetProfileByIdSaga() {
   yield takeEvery(type.GET_PROFILE_SAGA, getProfileByIdSaga);
 }
 
+//Add education
+const updateEducation = (token, educationData) => {
+  const profileData = fetch("api/profile/education", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "x-auth-token": token,
+    },
+    body: JSON.stringify(educationData),
+  })
+    .then(async (res) => {
+      const data = await res.json();
+      console.log(data);
+      return data;
+    })
+    .catch((e) => {
+      console.log(e);
+      throw e;
+    });
+  return profileData;
+};
+function* addEducationSaga(action) {
+  const { payload } = action;
+  const { token, educationData } = payload;
+  try {
+    const res = yield updateEducation(token, educationData);
+    yield put({ type: type.SEND_EDUCATION_DATA, payload: res });
+  } catch (error) {
+    console.log(error);
+  }
+}
+function* watchAddEducationSaga() {
+  yield takeEvery(type.SEND_EDUCATION_DATA_SAGA, addEducationSaga);
+}
+
 export default function* rootSaga() {
   yield all([
     watchSetAlertSaga(),
@@ -267,5 +302,6 @@ export default function* rootSaga() {
     watchCreateProfileSaga(),
     watchRemoveCreateProfileAlertSaga(),
     watchGetProfileByIdSaga(),
+    watchAddEducationSaga(),
   ]);
 }

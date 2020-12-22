@@ -1,3 +1,9 @@
 .Education {
   padding: 5rem;
+  text-align: center;
+
+  &__form {
+    width: 80%;
+    margin: auto;
+  }
 }

@@ -22,3 +22,38 @@
     }
   }
 }
+
+.Credentials {
+  margin-top: 3rem;
+  &__table {
+    margin-top: 2rem;
+    display: flex;
+    &-delete {
+      width: 10rem;
+      background: $secondary-color;
+      text-align: center;
+      align-items: center;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      color: white;
+      cursor: pointer;
+      &:hover {
+        background: red;
+      }
+    }
+    &-grp {
+      width: 25rem;
+      margin-right: 1rem;
+      background: rgb(238, 238, 238);
+      h2 {
+        margin: 3rem 0 3rem 0;
+        padding: 1rem;
+      }
+      &-title {
+        background: rgb(209, 209, 209);
+        padding: 1rem;
+      }
+    }
+  }
+}

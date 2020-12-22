@@ -1,6 +1,8 @@
 .form {
+  position: relative;
   &-row {
     text-align: left;
+    position: relative;
     input,
     select {
       display: block;
@@ -39,6 +41,7 @@
       font-size: 1.5rem;
     }
     &__form-group {
+      margin-top: 1rem;
       margin-bottom: 2rem;
     }
   }

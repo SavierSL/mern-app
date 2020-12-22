@@ -24,6 +24,7 @@ const CreateProfile = () => {
   const token = useSelector((state) => state.auth.token);
   const errors = useSelector((state) => state.profile.errors);
   const isProfile = useSelector((state) => state.profile.isProfile);
+  const errorCreate = useSelector((state) => state.dashboard.profile);
   const dispatch = useDispatch();
   console.log(isProfile);
   useEffect(() => {
@@ -68,7 +69,9 @@ const CreateProfile = () => {
     e.preventDefault();
     dispatch(removeCreateProfileAlert());
   };
-
+  if (errorCreate !== null && !errorCreate.hasOwnProperty("msg")) {
+    return <Redirect to="/dashboard" />;
+  }
   return (
     <>
       <div className="createProfile">

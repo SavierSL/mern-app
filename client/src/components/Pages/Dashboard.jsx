@@ -5,6 +5,7 @@ import { logOut } from "../redux/actions/dashboard";
 import { getUserName } from "../redux/actions/auth";
 import { removeCreateProfileAlert } from "../redux/actions/alert";
 import { getProfileById } from "../redux/actions/profile";
+import EducationCredetials from "./Credentials/EducationCredentials";
 import profile from "../redux/reducers/profile";
 
 const Dashboard = () => {
@@ -15,6 +16,7 @@ const Dashboard = () => {
   const isProfile = useSelector((state) => state.profile.isProfile);
   const loading = useSelector((state) => state.dashboard.loading);
   const profileData = useSelector((state) => state.dashboard.profile);
+  const profileEduc = useSelector((state) => state.dashboard.profile);
 
   const handleLogOutBtn = (e) => {
     e.preventDefault();
@@ -78,6 +80,14 @@ const Dashboard = () => {
               </div>
             )}
           </div>
+
+          {profileData.hasOwnProperty("msg") && !loading ? (
+            ""
+          ) : profileData.education.length === 0 ? (
+            ""
+          ) : (
+            <EducationCredetials profileData={profileData.education} />
+          )}
         </div>
       )}
     </>

@@ -14,6 +14,13 @@ export default function dashboard(state = initialState, action) {
         loading: false,
       };
     }
+    case types.SEND_EDUCATION_DATA: {
+      return {
+        ...state,
+        profile: payload,
+        loading: false,
+      };
+    }
     default: {
       return state;
     }
