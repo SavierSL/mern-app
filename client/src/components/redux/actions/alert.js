@@ -24,3 +24,9 @@ export const removeCreateProfileAlert = () => {
     type: type.REMOVE_CREATE_PROFILE_ALERT_SAGA,
   };
 };
+
+export const removeCreateEducationAlert = () => {
+  return {
+    type: type.REMOVE_EDUCATION_ALERT_SAGA,
+  };
+};

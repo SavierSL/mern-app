@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Link, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { sendEducationData } from "../../redux/actions/education";
 import { getUserName } from "../../redux/actions/auth";
+import { removeCreateEducationAlert } from "../../redux/actions/alert";
+import Alert from "../../Layout/Alert";
 
 const Education = () => {
+  const errors = useSelector((state) => state.dashboard.errors);
   const token = useSelector((state) => state.auth.token);
+  const education = useSelector((state) => state.dashboard.educationAdded);
   const dispatch = useDispatch();
   const [educationData, setEducationData] = useState({
     school: "",
@@ -26,6 +31,9 @@ const Education = () => {
     description,
   } = educationData;
 
+  if (education) {
+    return <Redirect to="/dashboard" />;
+  }
   const handleForm = (e) => {
     e.preventDefault();
     setEducationData({ ...educationData, [e.target.name]: e.target.value });
@@ -36,12 +44,22 @@ const Education = () => {
     dispatch(sendEducationData({ token, educationData }));
     dispatch(getUserName(token));
   };
+
+  const handleRemoveEducationAlert = (e) => {
+    e.preventDefault();
+    dispatch(removeCreateEducationAlert());
+  };
   return (
     <>
       <div className="Education">
         <h1 className="primary-heading">Add Your Education</h1>
         <p>Add any school or bootcamp that you have attended</p>
         <h2>Required field</h2>
+        {errors.length !== 0
+          ? errors.map((error) => {
+              return <Alert alert={error} />;
+            })
+          : ""}
         <div className="Education__form">
           <form
             action=""
@@ -54,6 +72,7 @@ const Education = () => {
               value={school}
               onChange={(e) => handleForm(e)}
               placeholder="School or Bootcamp"
+              onClick={(e) => handleRemoveEducationAlert(e)}
             />
             <input
               type="text"
@@ -61,6 +80,7 @@ const Education = () => {
               value={degree}
               onChange={(e) => handleForm(e)}
               placeholder="Degree or Certificate"
+              onClick={(e) => handleRemoveEducationAlert(e)}
             />
             <input
               type="text"
@@ -125,13 +145,30 @@ const Education = () => {
               name="description"
               value={description}
               onChange={(e) => handleForm(e)}
+              onClick={(e) => handleRemoveEducationAlert(e)}
               id=""
               cols="30"
               rows="10"
               placeholder="Program Description"
             ></textarea>
             <button>Submit</button>
-            <button>Back</button>
+
+            <Link
+              to="/dashboard"
+              className="create"
+              style={{
+                color: "white",
+                textDecoration: "none",
+                backgroundColor: "#30475e",
+                width: "100%",
+                display: "block",
+                textAlign: "center",
+                padding: "1rem",
+                fontSize: "1.5rem",
+              }}
+            >
+              Back
+            </Link>
           </form>
         </div>
       </div>

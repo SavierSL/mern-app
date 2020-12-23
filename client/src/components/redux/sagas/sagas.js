@@ -134,7 +134,7 @@ function* watchLogOutSaga() {
 const getUser = async (token) => {
   console.log(token);
 
-  let tokenData = fetch("/api/auth", {
+  let tokenData = await fetch("/api/auth", {
     method: "GET",
     headers: {
       "x-auth-token": token,
@@ -165,7 +165,7 @@ function* watchGetUserSaga() {
 
 //createProfile
 const createProfile = async (profileData, token) => {
-  const fetchData = fetch("/api/profile", {
+  const fetchData = await fetch("/api/profile", {
     method: "POST",
     headers: {
       "x-auth-token": token,
@@ -223,8 +223,8 @@ function* watchRemoveCreateProfileAlertSaga() {
 }
 
 //Get profileByID
-const getProfileById = (token) => {
-  const profileData = fetch(`/api/profile/me`, {
+const getProfileById = async (token) => {
+  const profileData = await fetch(`/api/profile/me`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -255,8 +255,8 @@ function* watchGetProfileByIdSaga() {
 }
 
 //Add education
-const updateEducation = (token, educationData) => {
-  const profileData = fetch("api/profile/education", {
+const updateEducation = async (token, educationData) => {
+  const profileData = await fetch("api/profile/education", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -280,9 +280,12 @@ function* addEducationSaga(action) {
   const { token, educationData } = payload;
   try {
     const res = yield updateEducation(token, educationData);
-    yield put({ type: type.SEND_EDUCATION_DATA, payload: res });
+    if (res.hasOwnProperty("errors")) {
+      return yield put({ type: type.SEND_EDUCATION_DATA_FAILED, payload: res });
+    }
+    yield put({ type: type.SEND_EDUCATION_DATA_SUCCESS, payload: res });
   } catch (error) {
-    console.log(error);
+    yield put({ type: type.SEND_EDUCATION_DATA_FAILED, payload: error });
   }
 }
 function* watchAddEducationSaga() {
@@ -290,10 +293,10 @@ function* watchAddEducationSaga() {
 }
 
 //Delete Education
-const deleteEducData = (token, id) => {
+const deleteEducData = async (token, id) => {
   console.log(id);
   console.log(token);
-  const toDelete = fetch(`api/profile/education/${id}`, {
+  const toDelete = await fetch(`api/profile/education/${id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -324,6 +327,88 @@ function* watchDeleteEducationSaga() {
   yield takeEvery(type.DELETE_EDUCATION_DATA_SAGA, deleteEducationSaga);
 }
 
+//remove Education Alert
+function* removeEducationAlertSaga() {
+  yield put({ type: type.REMOVE_EDUCATION_ALERT });
+}
+function* watchRemoveEducationAlertSaga() {
+  yield takeEvery(type.REMOVE_EDUCATION_ALERT_SAGA, removeEducationAlertSaga);
+}
+
+//Add experience
+
+const sendExperienceData = async (token, experienceData) => {
+  const experienceDataRes = await fetch("api/profile/experience", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "x-auth-token": token,
+    },
+    body: JSON.stringify(experienceData),
+  })
+    .then(async (res) => {
+      const data = await res.json();
+      console.log(data);
+      return data;
+    })
+    .catch((e) => {
+      console.log(e);
+      throw e;
+    });
+
+  return experienceDataRes;
+};
+function* addExperienceSaga(action) {
+  const { token, experienceData } = action.payload;
+  try {
+    const res = yield sendExperienceData(token, experienceData);
+    if (res.hasOwnProperty("errors")) {
+      return yield put({
+        type: type.SEND_EXPERIENCE_DATA_FAILED,
+        payload: res,
+      });
+    }
+    yield put({ type: type.SEND_EXPERIENCE_DATA_SUCCESS, payload: res });
+  } catch (error) {
+    yield put({ type: type.SEND_EXPERIENCE_DATA_FAILED, payload: error });
+  }
+}
+function* wacthExperienceSaga() {
+  yield takeEvery(type.SEND_EXPERIENCE_DATA_SAGA, addExperienceSaga);
+}
+//Delete Experience
+const deleteExpData = async (token, id) => {
+  const toDelete = await fetch(`api/profile/experience/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      "x-auth-token": token,
+    },
+  })
+    .then(async (res) => {
+      const data = await res.json();
+      console.log(data);
+      return data;
+    })
+    .catch((e) => {
+      console.log(e);
+      throw e;
+    });
+  return toDelete;
+};
+function* deleteExperienceSaga(action) {
+  const { id, token } = action.payload;
+  try {
+    const res = yield deleteExpData(token, id);
+    yield put({ type: type.DELETE_EXPERIENCE_DATA, payload: res });
+  } catch (error) {
+    throw error;
+  }
+}
+function* watchDeleteExperienceSaga() {
+  yield takeEvery(type.DELETE_EXPERIENCE_DATA_SAGA, deleteExperienceSaga);
+}
+
 export default function* rootSaga() {
   yield all([
     watchSetAlertSaga(),
@@ -338,5 +423,8 @@ export default function* rootSaga() {
     watchGetProfileByIdSaga(),
     watchAddEducationSaga(),
     watchDeleteEducationSaga(),
+    watchRemoveEducationAlertSaga(),
+    wacthExperienceSaga(),
+    watchDeleteExperienceSaga(),
   ]);
 }

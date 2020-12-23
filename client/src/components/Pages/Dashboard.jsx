@@ -8,6 +8,7 @@ import { deleteEducation } from "../redux/actions/education";
 import { getProfileById } from "../redux/actions/profile";
 
 import EducationCredetials from "./Credentials/EducationCredentials";
+import ExperienceCredentials from "./Credentials/ExperienceCredentials";
 import profile from "../redux/reducers/profile";
 
 const Dashboard = () => {
@@ -18,8 +19,6 @@ const Dashboard = () => {
   const isProfile = useSelector((state) => state.profile.isProfile);
   const loading = useSelector((state) => state.dashboard.loading);
   const profileData = useSelector((state) => state.dashboard.profile);
-
-  const profileEduc = useSelector((state) => state.dashboard.profile);
 
   const handleLogOutBtn = (e) => {
     e.preventDefault();
@@ -90,6 +89,9 @@ const Dashboard = () => {
             )}
           </div>
 
+          <h1 style={{ marginTop: "2rem" }} className="primary-heading">
+            Education Credentials
+          </h1>
           {profileData.hasOwnProperty("msg") && !loading
             ? ""
             : profileData.education.length === 0
@@ -116,8 +118,51 @@ const Dashboard = () => {
                       description={description}
                       degree={degree}
                     />
-                    <div className="Credentials__table-delete">
-                      <h1 onClick={() => handleDeleteButton(_id)}>DEL</h1>
+                    <div
+                      onClick={() => handleDeleteButton(_id)}
+                      className="Credentials__table-delete"
+                    >
+                      <h1>DEL</h1>
+                    </div>
+                  </>
+                );
+              })}
+          <h1 style={{ marginTop: "2rem" }} className="primary-heading">
+            Experience Credentials
+          </h1>
+          {profileData.hasOwnProperty("msg") && !loading
+            ? ""
+            : profileData.experience.length === 0
+            ? ""
+            : profileData.experience.map((data) => {
+                const {
+                  _id,
+                  from,
+                  to,
+                  company,
+                  current,
+                  description,
+                  location,
+                  title,
+                } = data;
+                return (
+                  <>
+                    <ExperienceCredentials
+                      key={_id}
+                      id={_id}
+                      from={from}
+                      to={to}
+                      company={company}
+                      current={current}
+                      description={description}
+                      degree={location}
+                      title={title}
+                    />
+                    <div
+                      onClick={() => handleDeleteButton(_id)}
+                      className="Credentials__table-delete"
+                    >
+                      <h1>DEL</h1>
                     </div>
                   </>
                 );

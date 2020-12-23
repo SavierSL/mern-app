@@ -4,6 +4,9 @@ const initialState = {
   profile: null,
   loading: true,
   deleteMsg: null,
+  errors: [],
+  educationAdded: false,
+  experienceAdded: false,
 };
 
 export default function dashboard(state = initialState, action) {
@@ -14,16 +17,58 @@ export default function dashboard(state = initialState, action) {
         ...state,
         profile: payload,
         loading: false,
+        educationAdded: false,
       };
     }
-    case types.SEND_EDUCATION_DATA: {
+    case types.SEND_EDUCATION_DATA_SUCCESS: {
+      return {
+        ...state,
+        profile: payload,
+        loading: false,
+        educationAdded: true,
+      };
+    }
+    case types.SEND_EDUCATION_DATA_FAILED: {
+      return {
+        ...state,
+        errors: [payload.errors],
+        loading: false,
+        educationAdded: false,
+      };
+    }
+    case types.SEND_EXPERIENCE_DATA_SUCCESS: {
+      return {
+        ...state,
+        profile: payload,
+        loading: false,
+        educationAdded: true,
+        experienceAdded: true,
+      };
+    }
+    case types.SEND_EXPERIENCE_DATA_FAILED: {
+      return {
+        ...state,
+        errors: [payload.errors],
+        loading: false,
+        educationAdded: false,
+        experienceAdded: false,
+      };
+    }
+    case types.REMOVE_EDUCATION_ALERT: {
+      return {
+        ...state,
+        errors: [],
+        loading: false,
+      };
+    }
+    case types.DELETE_EDUCATION_DATA: {
       return {
         ...state,
         profile: payload,
         loading: false,
       };
     }
-    case types.DELETE_EDUCATION_DATA: {
+    case types.DELETE_EXPERIENCE_DATA: {
       return {
         ...state,
         profile: payload,

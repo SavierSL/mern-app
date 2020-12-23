@@ -1,18 +1,14 @@
 import React from "react";
 import formatDate from "../../Utils/FormatDate";
-import { useSelector, useDispatch } from "react-redux";
-import { deleteEducation } from "../../redux/actions/education";
-import { getProfileById } from "../../redux/actions/profile";
 
-const EducationCredetials = ({
+const ExperienceCredentials = ({
   id,
   from,
   to,
-  school,
+  title,
   current,
   description,
-  degree,
-  click,
+  company,
 }) => {
   return (
     <>
@@ -22,13 +18,13 @@ const EducationCredetials = ({
             <div className="Credentials__table-grp-title">
               <h1 className="primary-heading">School</h1>
             </div>
-            <h2>{school}</h2>
+            <h2>{title}</h2>
           </div>
           <div className="Credentials__table-grp">
             <div className="Credentials__table-grp-title">
               <h1 className="primary-heading">Degree</h1>
             </div>
-            <h2>{degree}</h2>
+            <h2>{company}</h2>
           </div>
           <div className="Credentials__table-grp">
             <div className="Credentials__table-grp-title">
@@ -44,4 +40,4 @@ const EducationCredetials = ({
   );
 };
 
-export default EducationCredetials;
+export default ExperienceCredentials;

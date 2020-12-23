@@ -5,6 +5,7 @@ import Register from "./components/auth/Register";
 import Dashboard from "./components/Pages/Dashboard";
 import CreateProfile from "./components/Pages/CreateProfile";
 import Education from "./components/Pages/DashboardEdits/Education";
+import Experience from "./components/Pages/DashboardEdits/Experience";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 
@@ -19,6 +20,7 @@ const App = () => {
           <Route exact path="/dashboard" component={Dashboard} />
           <Route exact path="/create-profile" component={CreateProfile} />
           <Route exact path="/Education" component={Education} />
+          <Route exact path="/Experience" component={Experience} />
         </Switch>
       </Router>
     </Provider>

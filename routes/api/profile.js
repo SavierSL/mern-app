@@ -143,9 +143,8 @@ router.put(
   [
     auth,
     [
-      check("experience", "Experience is require").not().isEmpty(),
-      check("company", "Company is require").not().isEmpty(),
-      check("from", "From is require").not().isEmpty(),
+      check("company", "Company is required").not().isEmpty(),
+      check("from", "From is required").not().isEmpty(),
     ],
   ],
   async (req, res) => {
@@ -277,10 +276,10 @@ router.put(
   [
     auth,
     [
-      check("school", "School is require").not().isEmpty(),
-      check("degree", "Degree is require").not().isEmpty(),
-      check("from", "From is require").not().isEmpty(),
-      check("fieldofstudy", "Fieldofstudy is require").not().isEmpty(),
+      check("school", "School is required").not().isEmpty(),
+      check("degree", "Degree is required").not().isEmpty(),
+      check("from", "From is required").not().isEmpty(),
+      check("fieldofstudy", "Field of study is required").not().isEmpty(),
     ],
   ],
   async (req, res) => {
