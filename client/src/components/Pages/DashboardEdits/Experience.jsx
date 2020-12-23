@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { sendExperienceData } from "../../redux/actions/experience";
 import { getUserName } from "../../redux/actions/auth";
+import Alert from "../../Layout/Alert";
 
 const Experience = () => {
   const token = useSelector((state) => state.auth.token);
+  const errors = useSelector((state) => state.dashboard.errors);
   const dispatch = useDispatch();
   const [experienceData, setExperienceData] = useState({
     title: "",
@@ -43,6 +45,11 @@ const Experience = () => {
         <h1 className="primary-heading">Add Your Experience</h1>
         <p>Add any school or bootcamp that you have attended</p>
         <h2>Required field</h2>
+        {errors.length !== 0
+          ? errors.map((error) => {
+              return <Alert alert={error} />;
+            })
+          : ""}
         <div className="Education__form">
           <form
             action=""

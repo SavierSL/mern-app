@@ -336,7 +336,6 @@ function* watchRemoveEducationAlertSaga() {
 }
 
 //Add experience
-
 const sendExperienceData = async (token, experienceData) => {
   const experienceDataRes = await fetch("api/profile/experience", {
     method: "PUT",
@@ -378,6 +377,7 @@ function* wacthExperienceSaga() {
 }
 //Delete Experience
 const deleteExpData = async (token, id) => {
+  console.log(token);
   const toDelete = await fetch(`api/profile/experience/${id}`, {
     method: "DELETE",
     headers: {

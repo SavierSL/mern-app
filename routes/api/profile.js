@@ -143,6 +143,7 @@ router.put(
   [
     auth,
     [
+      check("title", "Job Title is required").not().isEmpty(),
       check("company", "Company is required").not().isEmpty(),
       check("from", "From is required").not().isEmpty(),
     ],
@@ -187,12 +188,12 @@ router.delete("/experience/:exp_id", auth, async (req, res) => {
         .send("There is no experience that has been deleted");
     }
     profileToDeleteExp.experience = newExperience;
-    await Profile.findOneAndUpdate(
+    const profile = await Profile.findOneAndUpdate(
       { user: req.user.id },
       { $set: profileToDeleteExp },
       { new: true }
     );
-    res.send("deleted");
+    res.send(profile);
   } catch (error) {
     res.status(400).send(error.message);
   }

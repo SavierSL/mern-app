@@ -5,6 +5,7 @@ import { logOut } from "../redux/actions/dashboard";
 import { getUserName } from "../redux/actions/auth";
 import { removeCreateProfileAlert } from "../redux/actions/alert";
 import { deleteEducation } from "../redux/actions/education";
+import { deleteExperience } from "../redux/actions/experience";
 import { getProfileById } from "../redux/actions/profile";
 
 import EducationCredetials from "./Credentials/EducationCredentials";
@@ -41,11 +42,13 @@ const Dashboard = () => {
     return <Redirect to="/" />;
   }
 
-  const handleDeleteButton = (id) => {
+  const handleDeleteButtonEd = (id) => {
     dispatch(deleteEducation({ token, id }));
     console.log("clicked");
   };
-
+  const handleDeleteButtonExp = (id) => {
+    dispatch(deleteExperience({ token, id }));
+  };
   return (
     <>
       {loading ? (
@@ -119,7 +122,7 @@ const Dashboard = () => {
                       degree={degree}
                     />
                     <div
-                      onClick={() => handleDeleteButton(_id)}
+                      onClick={() => handleDeleteButtonEd(_id)}
                       className="Credentials__table-delete"
                     >
                       <h1>DEL</h1>
@@ -159,7 +162,7 @@ const Dashboard = () => {
                       title={title}
                     />
                     <div
-                      onClick={() => handleDeleteButton(_id)}
+                      onClick={() => handleDeleteButtonExp(_id)}
                       className="Credentials__table-delete"
                     >
                       <h1>DEL</h1>
