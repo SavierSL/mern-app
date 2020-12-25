@@ -30,6 +30,11 @@ const Education = () => {
     current,
     description,
   } = educationData;
+  useEffect(() => {
+    if (from !== "") {
+      dispatch(removeCreateEducationAlert());
+    }
+  }, [from]);
 
   if (education) {
     return <Redirect to="/dashboard" />;

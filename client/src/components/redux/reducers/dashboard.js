@@ -18,6 +18,7 @@ export default function dashboard(state = initialState, action) {
         profile: payload,
         loading: false,
         educationAdded: false,
+        experienceAdded: false,
       };
     }
     case types.SEND_EDUCATION_DATA_SUCCESS: {
@@ -55,6 +56,13 @@ export default function dashboard(state = initialState, action) {
       };
     }
     case types.REMOVE_EDUCATION_ALERT: {
+      return {
+        ...state,
+        errors: [],
+        loading: false,
+      };
+    }
+    case types.REMOVE_EXPERIENCE_ALERT: {
       return {
         ...state,
         errors: [],

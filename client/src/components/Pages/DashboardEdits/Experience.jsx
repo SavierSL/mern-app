@@ -1,13 +1,15 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { sendExperienceData } from "../../redux/actions/experience";
 import { getUserName } from "../../redux/actions/auth";
+import { removeCreateExpAlert } from "../../redux/actions/alert";
 import Alert from "../../Layout/Alert";
 
 const Experience = () => {
   const token = useSelector((state) => state.auth.token);
   const errors = useSelector((state) => state.dashboard.errors);
+  const experience = useSelector((state) => state.dashboard.experienceAdded);
   const dispatch = useDispatch();
   const [experienceData, setExperienceData] = useState({
     title: "",
@@ -28,6 +30,14 @@ const Experience = () => {
     current,
     description,
   } = experienceData;
+  useEffect(() => {
+    if (from !== "") {
+      dispatch(removeCreateExpAlert());
+    }
+  }, [from]);
+  if (experience) {
+    return <Redirect to="/dashboard" />;
+  }
 
   const handleForm = (e) => {
     e.preventDefault();
@@ -39,6 +49,11 @@ const Experience = () => {
     dispatch(sendExperienceData({ token, experienceData }));
     dispatch(getUserName(token));
   };
+
+  const handleRemoveAlertExp = () => {
+    dispatch(removeCreateExpAlert());
+  };
+
   return (
     <>
       <div className="Education">
@@ -62,6 +77,7 @@ const Experience = () => {
               value={title}
               onChange={(e) => handleForm(e)}
               placeholder="Job Title"
+              onClick={() => handleRemoveAlertExp()}
             />
             <input
               type="text"
@@ -69,6 +85,7 @@ const Experience = () => {
               value={company}
               onChange={(e) => handleForm(e)}
               placeholder="Company"
+              onClick={() => handleRemoveAlertExp()}
             />
             <input
               type="text"
@@ -76,6 +93,7 @@ const Experience = () => {
               value={location}
               onChange={(e) => handleForm(e)}
               placeholder="Location"
+              onClick={() => handleRemoveAlertExp()}
             />
             <div className="form-row__form-group">
               <label htmlFor="date">
@@ -133,6 +151,7 @@ const Experience = () => {
               name="description"
               value={description}
               onChange={(e) => handleForm(e)}
+              onClick={() => handleRemoveAlertExp()}
               id=""
               cols="30"
               rows="10"

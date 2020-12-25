@@ -30,3 +30,9 @@ export const removeCreateEducationAlert = () => {
     type: type.REMOVE_EDUCATION_ALERT_SAGA,
   };
 };
+
+export const removeCreateExpAlert = () => {
+  return {
+    type: type.REMOVE_EXPERIENCE_ALERT_SAGA,
+  };
+};

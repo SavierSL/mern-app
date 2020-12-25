@@ -409,6 +409,14 @@ function* watchDeleteExperienceSaga() {
   yield takeEvery(type.DELETE_EXPERIENCE_DATA_SAGA, deleteExperienceSaga);
 }
 
+//removeEXP Alert
+function* removeExperienceAlertSaga() {
+  yield put({ type: type.REMOVE_EXPERIENCE_ALERT });
+}
+function* watchRemoveExperienceAlert() {
+  yield takeEvery(type.REMOVE_EXPERIENCE_ALERT_SAGA, removeExperienceAlertSaga);
+}
+
 export default function* rootSaga() {
   yield all([
     watchSetAlertSaga(),
@@ -426,5 +434,6 @@ export default function* rootSaga() {
     watchRemoveEducationAlertSaga(),
     wacthExperienceSaga(),
     watchDeleteExperienceSaga(),
+    watchRemoveExperienceAlert(),
   ]);
 }
