@@ -80,7 +80,7 @@ const Dashboard = () => {
             ) : (
               <div className="dashboard__editProfile">
                 <button className="btn-prim">
-                  <Link to="/create-profile">Update Profile</Link>
+                  <Link to="/update-profile">Update Profile</Link>
                 </button>
                 <button className="btn-prim">
                   <Link to="/education">Add Your Education</Link>
