@@ -1,13 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateProfile } from "../redux/actions/profile";
+import { setAlert } from "../redux/actions/alert";
+import Alert from "../Layout/Alert";
 
 const UpdateProfile = () => {
   const dispatch = useDispatch();
   const profileData = useSelector((state) => state.dashboard.profile);
+  const isProfile = useSelector((state) => state.profile);
+  const saveAlert = {
+    alert: [
+      {
+        msg: "Saved",
+      },
+    ],
+  };
   const token = useSelector((state) => state.auth.token);
-
+  const [save, setSave] = useState(false);
   const [profile, setProfile] = useState(profileData);
+  // useEffect(() => {
+
+  //   console.log("runned");
+  // }, [save]);
+
   const handleOnChange = (e) => {
     e.preventDefault(e);
     setProfile({ ...profile, [e.target.name]: e.target.value });
@@ -15,8 +30,16 @@ const UpdateProfile = () => {
   console.log(profile);
   const handleSaveButton = (e) => {
     e.preventDefault();
-    dispatch(updateProfile( token, profile ));
+    dispatch(updateProfile(token, profile));
+    if (isProfile.profile !== null && isProfile.errors.length === 0) {
+      setSave(true);
+      console.log("true");
+    }
+    setTimeout(() => {
+      setSave(false);
+    }, 3000);
   };
+
   return (
     <>
       <div className="createProfile">
@@ -24,6 +47,7 @@ const UpdateProfile = () => {
           Update Profile
         </h1>
         <div className="createProfile__form">
+          {save ? <Alert alert={saveAlert.alert} /> : ""}
           <form
             action=""
             className="form-row"

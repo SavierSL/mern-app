@@ -4,6 +4,8 @@ const initialState = {
   loading: true,
   errors: [],
   isProfile: false,
+  isUpdated: false,
+  allProfile: null,
 };
 
 export default function profile(state = initialState, action) {
@@ -50,6 +52,12 @@ export default function profile(state = initialState, action) {
         loading: false,
         isProfile: true,
         errors: [],
+      };
+    }
+    case types.GET_ALL_PROFILES: {
+      return {
+        ...state,
+        allProfile: payload,
       };
     }
     default: {

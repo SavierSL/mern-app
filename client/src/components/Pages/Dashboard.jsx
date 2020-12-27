@@ -10,7 +10,6 @@ import { getProfileById } from "../redux/actions/profile";
 
 import EducationCredetials from "./Credentials/EducationCredentials";
 import ExperienceCredentials from "./Credentials/ExperienceCredentials";
-import profile from "../redux/reducers/profile";
 
 const Dashboard = () => {
   const auth = useSelector((state) => state.auth.isAuth);
@@ -58,8 +57,11 @@ const Dashboard = () => {
           <h1 className="heading-primary">Dashboard</h1>
           <h2 className="dashboard__logout" onClick={(e) => handleLogOutBtn(e)}>
             Log out
+          </h2>{" "}
+          <h2 className="dashboard_profiles">
+            {" "}
+            <Link to="/profiles">Profiles</Link>{" "}
           </h2>
-
           <div className="dashboard__container">
             <div className="dashboard__welcome">
               <h1 className="primary-heading">
@@ -91,7 +93,6 @@ const Dashboard = () => {
               </div>
             )}
           </div>
-
           <h1 style={{ marginTop: "2rem" }} className="primary-heading">
             Education Credentials
           </h1>

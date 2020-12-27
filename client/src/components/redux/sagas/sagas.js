@@ -454,6 +454,34 @@ function* updateProfileSaga(action) {
 function* watchUpdateProfileSaga() {
   yield takeEvery(type.UPDATE_PROFILE_SAGA, updateProfileSaga);
 }
+
+//Get all profile Saga
+const getAllProfiles = async () => {
+  const data = await fetch("api/profile", { method: "GET" })
+    .then(async (res) => {
+      const data = await res.json();
+      console.log(data);
+      return data;
+    })
+    .catch((e) => {
+      throw e;
+    });
+  return data;
+};
+function* getAllProfilesSaga() {
+  try {
+    const res = yield getAllProfiles();
+    if (res.hasOwnProperty("errors")) {
+      res.status(400).send({ msg: "error" });
+    }
+    yield put({ type: type.GET_ALL_PROFILES, payload: res });
+  } catch (error) {
+    throw error;
+  }
+}
+function* watchGetAllProfileSaga() {
+  yield takeEvery(type.GET_ALL_PROFILES_SAGA, getAllProfilesSaga);
+}
 export default function* rootSaga() {
   yield all([
     watchSetAlertSaga(),
@@ -473,5 +501,6 @@ export default function* rootSaga() {
     watchDeleteExperienceSaga(),
     watchRemoveExperienceAlert(),
     watchUpdateProfileSaga(),
+    watchGetAllProfileSaga(),
   ]);
 }

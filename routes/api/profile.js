@@ -121,7 +121,7 @@ router.get("/", async (req, res) => {
     const findProfile = await Profile.find().populate("user", [
       "name",
       "avatar",
-    ]); //it will find the correct name and avatar base on the user.id
+    ]);
     if (!findProfile) {
       return res.status(400).send("There is no user profile");
     }

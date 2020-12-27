@@ -20,3 +20,7 @@ export const updateProfile = (token, profileData) => {
     payload: { token, profileData },
   };
 };
+
+export const getAllProfiles = () => {
+  return { type: types.GET_ALL_PROFILES_SAGA };
+};

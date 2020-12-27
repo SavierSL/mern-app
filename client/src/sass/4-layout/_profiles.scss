@@ -1,0 +1,25 @@
+.profiles {
+  padding: 5rem;
+  &__profile {
+    padding: 1rem;
+    background: rgb(238, 232, 232);
+    height: 12rem;
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    &-img {
+      height: 8rem;
+      border-radius: 100%;
+    }
+    &-details {
+      margin-left: 5rem;
+    }
+    &-skills {
+      margin-left: 8rem;
+      p {
+        color: blue;
+        font-weight: 700;
+      }
+    }
+  }
+}

@@ -36,3 +36,7 @@ export const removeCreateExpAlert = () => {
     type: type.REMOVE_EXPERIENCE_ALERT_SAGA,
   };
 };
+
+export const removeSavedProfile = () => {
+  return {}
+}
