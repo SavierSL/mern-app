@@ -12,7 +12,6 @@ const Profiles = () => {
   return (
     <>
       <div className="profiles">
-        {" "}
         <h1 className="heading-primary">Developers</h1>
         {allProfiles != null
           ? allProfiles.map((data) => {
