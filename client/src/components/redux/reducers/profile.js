@@ -35,6 +35,23 @@ export default function profile(state = initialState, action) {
         errors: [],
       };
     }
+    case types.UPDATE_PROFILE_FAILED: {
+      return {
+        ...state,
+        loading: false,
+        isProfile: true,
+        errors: [...payload.errors],
+      };
+    }
+    case types.UPDATE_PROFILE_SUCCESS: {
+      return {
+        ...state,
+        profile: payload,
+        loading: false,
+        isProfile: true,
+        errors: [],
+      };
+    }
     default: {
       return {
         ...state,

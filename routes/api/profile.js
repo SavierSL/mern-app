@@ -80,6 +80,39 @@ router.post(
     }
   }
 );
+
+// @route     POST api/profile/update-profile
+// @desc      Update our users profile
+// @access    Private
+router.put(
+  "/update-profile",
+  [
+    auth,
+    check("skills", "Skills is required").not().isEmpty(),
+    check("status", "Status is required").not().isEmpty(),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors) {
+      return res.status(400).send({ errors: errors.array() });
+    }
+    try {
+      const update = req.body;
+      let findProfile = await Profile.findOneAndUpdate(
+        {
+          user: req.user.id,
+        },
+        update,
+        { new: true }
+      );
+      await findProfile.save();
+      res.send(findProfile);
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  }
+);
+
 // @route     GET api/profile
 // @desc      GET all profiles
 // @access    Public

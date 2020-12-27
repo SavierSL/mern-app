@@ -13,3 +13,10 @@ export const getProfileById = (token) => {
     payload: token,
   };
 };
+
+export const updateProfile = (token, profileData) => {
+  return {
+    type: types.UPDATE_PROFILE_SAGA,
+    payload: { token, profileData },
+  };
+};

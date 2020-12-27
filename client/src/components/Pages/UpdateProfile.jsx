@@ -1,10 +1,22 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { updateProfile } from "../redux/actions/profile";
 
 const UpdateProfile = () => {
+  const dispatch = useDispatch();
   const profileData = useSelector((state) => state.dashboard.profile);
+  const token = useSelector((state) => state.auth.token);
+
   const [profile, setProfile] = useState(profileData);
+  const handleOnChange = (e) => {
+    e.preventDefault(e);
+    setProfile({ ...profile, [e.target.name]: e.target.value });
+  };
   console.log(profile);
+  const handleSaveButton = (e) => {
+    e.preventDefault();
+    dispatch(updateProfile( token, profile ));
+  };
   return (
     <>
       <div className="createProfile">
@@ -12,9 +24,17 @@ const UpdateProfile = () => {
           Update Profile
         </h1>
         <div className="createProfile__form">
-          <form action="" className="form-row">
+          <form
+            action=""
+            className="form-row"
+            onSubmit={(e) => handleSaveButton(e)}
+          >
             <div className="form-row__form-group">
-              <select name="status" value={profile.status}>
+              <select
+                name="status"
+                value={profile.status}
+                onChange={(e) => handleOnChange(e)}
+              >
                 <option>* Select Professional Status</option>
                 <option value="Developer">Developer</option>
                 <option value="Junior Developer">Junior Developer</option>
@@ -35,6 +55,7 @@ const UpdateProfile = () => {
                 placeholder="Company"
                 name="company"
                 value={profile.company}
+                onChange={(e) => handleOnChange(e)}
               />
               <small className="form-row__form-text">
                 Could be your own company or one you work for
@@ -46,6 +67,7 @@ const UpdateProfile = () => {
                 placeholder="Website"
                 name="website"
                 value={profile.website}
+                onChange={(e) => handleOnChange(e)}
               />
               <small className="form-row__form-text">
                 Could be your own company or own website
@@ -57,6 +79,7 @@ const UpdateProfile = () => {
                 placeholder="Location"
                 name="location"
                 value={profile.location}
+                onChange={(e) => handleOnChange(e)}
               />
               <small className="form-row__form-text">
                 CIty &amp; state suggested (eg. Boston, MA
@@ -68,6 +91,7 @@ const UpdateProfile = () => {
                 placeholder="* Skills"
                 name="skills"
                 value={profile.skills}
+                onChange={(e) => handleOnChange(e)}
               />
               <small className="form-row__form-text">
                 Please use comma separated values (eg. CSS, JS, REACT)
@@ -79,6 +103,7 @@ const UpdateProfile = () => {
                 placeholder="Github Username"
                 name="githubusername"
                 value={profile.githubusername}
+                onChange={(e) => handleOnChange(e)}
               />
               <small className="form-row__form-text">
                 Could be your own company or one you work for
@@ -90,6 +115,7 @@ const UpdateProfile = () => {
                 placeholder="Bio"
                 name="bio"
                 value={profile.bio}
+                onChange={(e) => handleOnChange(e)}
               />
               <small className="form-row__form-text">
                 Tell us a little about yourself
@@ -111,6 +137,7 @@ const UpdateProfile = () => {
                     type="text"
                     placeholder="Twitter URL"
                     value={profile.social.twitter}
+                    onChange={(e) => handleOnChange(e)}
                     name="twitter"
                   />
                 </div>
@@ -120,6 +147,7 @@ const UpdateProfile = () => {
                     type="text"
                     placeholder="Twitter URL"
                     value={profile.social.facebook}
+                    onChange={(e) => handleOnChange(e)}
                     name="facebook"
                   />
                 </div>
@@ -129,6 +157,7 @@ const UpdateProfile = () => {
                     type="text"
                     placeholder="Twitter URL"
                     value={profile.social.youtube}
+                    onChange={(e) => handleOnChange(e)}
                     name="youtube"
                   />
                 </div>
@@ -139,6 +168,7 @@ const UpdateProfile = () => {
                     placeholder="Twitter URL"
                     name=""
                     value={profile.social.linkedin}
+                    onChange={(e) => handleOnChange(e)}
                   />
                 </div>
               </div>

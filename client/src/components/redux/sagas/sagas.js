@@ -417,6 +417,43 @@ function* watchRemoveExperienceAlert() {
   yield takeEvery(type.REMOVE_EXPERIENCE_ALERT_SAGA, removeExperienceAlertSaga);
 }
 
+//Update Profile
+const updateProfile = async (token, profileData) => {
+  console.log(profileData);
+  const data = await fetch("api/profile/update-profile", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "x-auth-token": token,
+    },
+    body: JSON.stringify(profileData),
+  })
+    .then(async (res) => {
+      const data = await res.json();
+      console.log(data);
+      return data;
+    })
+    .catch((e) => {
+      throw e;
+    });
+  return data;
+};
+
+function* updateProfileSaga(action) {
+  const { token, profileData } = action.payload;
+  try {
+    const res = yield updateProfile(token, profileData);
+    if (res.hasOwnProperty("errors")) {
+      return yield put({ type: type.UPDATE_PROFILE_FAILED, payload: res });
+    }
+    yield put({ type: type.UPDATE_PROFILE_SUCCESS, payload: res });
+  } catch (error) {
+    return yield put({ type: type.UPDATE_PROFILE_FAILED, payload: error });
+  }
+}
+function* watchUpdateProfileSaga() {
+  yield takeEvery(type.UPDATE_PROFILE_SAGA, updateProfileSaga);
+}
 export default function* rootSaga() {
   yield all([
     watchSetAlertSaga(),
@@ -435,5 +472,6 @@ export default function* rootSaga() {
     wacthExperienceSaga(),
     watchDeleteExperienceSaga(),
     watchRemoveExperienceAlert(),
+    watchUpdateProfileSaga(),
   ]);
 }
