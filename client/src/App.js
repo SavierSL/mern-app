@@ -26,7 +26,7 @@ const App = () => {
           <Route exact path="/Experience" component={Experience} />
           <Route exact path="/update-profile" component={UpdateProfile} />
           <Route exact path="/profiles" component={Profiles} />
-          <Route exact path="/profiles/profile" component={Profile} />
+          <Route path="/profiles/profile/" component={Profile} />
         </Switch>
       </Router>
     </Provider>
