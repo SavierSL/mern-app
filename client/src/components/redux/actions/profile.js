@@ -24,3 +24,10 @@ export const updateProfile = (token, profileData) => {
 export const getAllProfiles = () => {
   return { type: types.GET_ALL_PROFILES_SAGA };
 };
+
+export const viewProfile = (profileID) => {
+  return {
+    type: types.GET_PROFILE_BY_ID_SAGA,
+    payload: { profileID },
+  };
+};

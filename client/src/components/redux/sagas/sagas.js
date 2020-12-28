@@ -482,6 +482,43 @@ function* getAllProfilesSaga() {
 function* watchGetAllProfileSaga() {
   yield takeEvery(type.GET_ALL_PROFILES_SAGA, getAllProfilesSaga);
 }
+
+// GET profile by ID
+const getProfileByIdDATA = async (profileID) => {
+  const userID = profileID._id;
+  const url = `api/profile/user/${userID}`;
+  const content = {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  };
+  const data = await fetch(url, content)
+    .then(async (res) => {
+      const data = await res.json();
+      console.log(data);
+      return data;
+    })
+    .catch((e) => {
+      console.log(e);
+      throw e;
+    });
+  return data;
+};
+function* getProfileByIDSaga(action) {
+  const { profileID } = action.payload;
+  try {
+    const res = yield getProfileByIdDATA(profileID);
+    if (res.hasOwnProperty("errors")) {
+      yield put({ type: type.GET_PROFILE_BY_ID_FAILED, payload: res });
+    }
+    yield put({ type: type.GET_PROFILE_BY_ID_SUCCESS, payload: res });
+  } catch (error) {
+    yield put({ type: type.GET_PROFILE_BY_ID_FAILED, payload: error });
+  }
+}
+function* watchgetProfileByIDSaga() {
+  yield takeEvery(type.GET_PROFILE_BY_ID_SAGA, getProfileByIDSaga);
+}
+
 export default function* rootSaga() {
   yield all([
     watchSetAlertSaga(),
@@ -502,5 +539,6 @@ export default function* rootSaga() {
     watchRemoveExperienceAlert(),
     watchUpdateProfileSaga(),
     watchGetAllProfileSaga(),
+    watchgetProfileByIDSaga(),
   ]);
 }

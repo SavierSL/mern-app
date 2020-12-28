@@ -1,24 +1,39 @@
 .profiles {
   padding: 5rem;
   &__profile {
-    padding: 1rem;
-    background: rgb(238, 232, 232);
-    height: 12rem;
+    padding: 2rem;
+    background: rgb(223, 244, 250);
+    height: 15rem;
     margin-top: 2rem;
     display: flex;
     align-items: center;
+    -webkit-box-shadow: 0 10px 6px -6px #777;
+    -moz-box-shadow: 0 10px 6px -6px #777;
+    box-shadow: 0 8px 6px -6px #777;
     &-img {
       height: 8rem;
       border-radius: 100%;
     }
     &-details {
       margin-left: 5rem;
+      width: 20rem;
+      button {
+        padding: 1rem;
+        border: none;
+        background: $secondary-color;
+        margin-top: 1rem;
+        color: white;
+        cursor: pointer;
+      }
     }
     &-skills {
       margin-left: 8rem;
+      display: flex;
+      align-items: center;
       p {
-        color: blue;
+        color: $secondary-color;
         font-weight: 700;
+        margin-left: 2rem;
       }
     }
   }

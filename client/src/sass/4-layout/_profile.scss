@@ -1,0 +1,10 @@
+.profile {
+  padding: 5rem;
+  &__container {
+    &-pic {
+      img {
+        height: 10rem;
+      }
+    }
+  }
+}
