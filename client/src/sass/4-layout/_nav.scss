@@ -1,0 +1,30 @@
+.navigator {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+  @mixin link {
+    cursor: pointer;
+    color: $secondary-color;
+    margin-right: 4rem;
+  }
+  &__logout {
+    @include link;
+    cursor: pointer;
+  }
+  &__profiles {
+    @include link;
+    a {
+      list-style: none;
+      text-decoration: none;
+      color: $secondary-color;
+    }
+  }
+  &__post {
+    @include link;
+    a {
+      list-style: none;
+      text-decoration: none;
+      color: $secondary-color;
+    }
+  }
+}

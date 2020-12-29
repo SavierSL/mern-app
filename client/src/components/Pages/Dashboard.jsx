@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
-import { logOut } from "../redux/actions/dashboard";
 import { getUserName } from "../redux/actions/auth";
 import { removeCreateProfileAlert } from "../redux/actions/alert";
 import { deleteEducation } from "../redux/actions/education";
@@ -19,11 +18,6 @@ const Dashboard = () => {
   const isProfile = useSelector((state) => state.profile.isProfile);
   const loading = useSelector((state) => state.dashboard.loading);
   const profileData = useSelector((state) => state.dashboard.profile);
-
-  const handleLogOutBtn = (e) => {
-    e.preventDefault();
-    dispatch(logOut());
-  };
 
   if (isProfile === true) {
     dispatch(removeCreateProfileAlert());
@@ -55,13 +49,7 @@ const Dashboard = () => {
       ) : (
         <div className="dashboard">
           <h1 className="heading-primary">Dashboard</h1>
-          <h2 className="dashboard__logout" onClick={(e) => handleLogOutBtn(e)}>
-            Log out
-          </h2>{" "}
-          <h2 className="dashboard_profiles">
-            {" "}
-            <Link to="/profiles">Profiles</Link>{" "}
-          </h2>
+
           <div className="dashboard__container">
             <div className="dashboard__welcome">
               <h1 className="primary-heading">

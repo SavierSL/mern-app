@@ -9,6 +9,8 @@ import Experience from "./components/Pages/DashboardEdits/Experience";
 import UpdateProfile from "./components/Pages/UpdateProfile";
 import Profiles from "./components/Pages/Profiles";
 import Profile from "./components/Pages/Profile";
+import Nav from "./components/Layout/Nav";
+import Posts from "./components/Pages/Posts";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 
@@ -17,6 +19,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <Router>
+        <Route path="/:dashboard" component={Nav} />
         <Route exact path="/" component={Header} />
         <Switch>
           <Route exact path="/register" component={Register} />
@@ -27,6 +30,7 @@ const App = () => {
           <Route exact path="/update-profile" component={UpdateProfile} />
           <Route exact path="/profiles" component={Profiles} />
           <Route path="/profiles/profile/" component={Profile} />
+          <Route path="/post" component={Posts} />
         </Switch>
       </Router>
     </Provider>

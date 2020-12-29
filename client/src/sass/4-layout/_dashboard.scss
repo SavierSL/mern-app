@@ -9,18 +9,7 @@
     margin-right: 6rem;
     color: $secondary-color;
   }
-  &__logout {
-    @include link;
-  }
-  &_profiles {
-    @include link;
-    margin-top: 5rem;
-    a {
-      list-style: none;
-      text-decoration: none;
-      color: $secondary-color;
-    }
-  }
+
   &__welcome {
     margin-top: 2rem;
   }

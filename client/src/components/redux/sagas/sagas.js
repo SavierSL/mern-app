@@ -519,6 +519,82 @@ function* watchgetProfileByIDSaga() {
   yield takeEvery(type.GET_PROFILE_BY_ID_SAGA, getProfileByIDSaga);
 }
 
+//post a post
+const postData = async (token, postContent) => {
+  const url = "api/post";
+  const content = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-auth-token": token,
+    },
+    body: JSON.stringify(postContent),
+  };
+  const data = await fetch(url, content)
+    .then(async (res) => {
+      const data = await res.json();
+      console.log(data);
+      return data;
+    })
+    .catch((e) => {
+      console.log(e);
+      throw e;
+    });
+  return data;
+};
+function* postSaga(action) {
+  const { token, postContent } = action.payload;
+  try {
+    const res = yield postData(token, postContent);
+    if (res.hasOwnProperty("errors")) {
+      return yield put({ type: type.POST_FAILED, payload: res });
+    }
+    yield put({ type: type.POST_SUCCESS, payload: res });
+  } catch (error) {
+    return yield put({ type: type.POST_FAILED, payload: error });
+  }
+}
+function* watchPostSaga() {
+  yield takeEvery(type.POST_SAGA, postSaga);
+}
+
+//GET ALL POST
+const getAllPost = async (token) => {
+  const url = "api/post";
+  const content = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "x-auth-token": token,
+    },
+  };
+  const data = await fetch(url, content)
+    .then(async (res) => {
+      const data = await res.json();
+      console.log(data);
+      return data;
+    })
+    .catch((e) => {
+      throw e;
+    });
+  return data;
+};
+function* getAllPostSaga(action) {
+  const { token } = action.payload;
+  try {
+    const res = yield getAllPost(token);
+    if (res.hasOwnProperty("errors")) {
+      return yield put({ type: type.GET_ALL_POST_FAILED, payload: res });
+    }
+    yield put({ type: type.GET_ALL_POST_SUCCESS, payload: res });
+  } catch (error) {
+    yield put({ type: type.GET_ALL_POST_FAILED, payload: error });
+  }
+}
+function* watchGetAllPostSaga() {
+  yield takeEvery(type.GET_ALL_POST_SAGA, getAllPostSaga);
+}
+
 export default function* rootSaga() {
   yield all([
     watchSetAlertSaga(),
@@ -540,5 +616,7 @@ export default function* rootSaga() {
     watchUpdateProfileSaga(),
     watchGetAllProfileSaga(),
     watchgetProfileByIDSaga(),
+    watchPostSaga(),
+    watchGetAllPostSaga(),
   ]);
 }

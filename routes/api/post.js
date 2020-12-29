@@ -139,4 +139,19 @@ router.delete("/comment/:post_id/:comment_id", auth, async (req, res) => {
   }
 });
 
+//@route     DELETE api/comment/:post_id/:comment_id
+//@desc      DELETE a comment
+//@access    Public
+router.get("/", auth, async (req, res) => {
+  try {
+    const posts = await Post.find();
+    if (!posts) {
+      return res.status(400).send({ msg: "Can't find posts" });
+    }
+    res.send(posts.reverse());
+  } catch (error) {
+    res.status(400).send({ error: error.message });
+  }
+});
+
 module.exports = router;

@@ -29,8 +29,8 @@ const Header = () => {
       <div className="header">
         <div className="header__container">
           <div className="header__titleContent">
-            <h1 className="heading-primary">C o n e k</h1>
-            <h1 className="heading-sub">connect with your friends</h1>
+            <h1 className="heading-primary">C o n e k DEVS</h1>
+            <h1 className="heading-sub">connect with your co-devs</h1>
           </div>
           <div className="header__loginForm">
             <Alert alert={error} />
