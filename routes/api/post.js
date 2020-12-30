@@ -20,10 +20,13 @@ router.post(
       return res.status(400).send({ errors: errors.array() });
     }
     try {
+      const user = await User.findById(req.user.id);
       const post = {
         user: req.user.id,
+        name: user.name,
         ...req.body,
       };
+
       const newPost = new Post(post);
       newPost.save();
       res.send(newPost);

@@ -1,19 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { postAction, getAllPosts } from "../redux/actions/post";
+import { getProfileById } from "../redux/actions/profile";
 import PostComponent from "../Pages/PostComponent";
 
 const Posts = () => {
   const token = useSelector((state) => state.auth.token);
   const posts = useSelector((state) => state.post.posts);
+
   const [click, setClicked] = useState(false);
   const dispatch = useDispatch();
+
   const [post, setPost] = useState({
     postDescription: "",
   });
   useEffect(() => {
+    dispatch(getProfileById(token));
     dispatch(getAllPosts(token));
   }, [click]);
+
+  const profileUser = useSelector((state) => {
+    if (state.dashboard.profile.hasOwnProperty("user")) {
+      return state.dashboard.profile.user.name;
+    } else {
+      return "";
+    }
+  });
+  // state.dashboard.profile.user.name != null
+  //   ? state.dashboard.profile.user.name
+  //   : ""
   console.log(posts);
   const { postDescription } = post;
   const handlePost = (e) => {
@@ -31,7 +46,7 @@ const Posts = () => {
   return (
     <>
       <div className="posts">
-        <h1 className="heading-primary">Posts</h1>
+        <h1 className="heading-primary">Write Post</h1>
         <div className="posts__container">
           <div className="posts__container-input">
             <form
@@ -42,6 +57,7 @@ const Posts = () => {
               <textarea
                 type="text"
                 name="postDescription"
+                placeholder="What's on your mind?"
                 value={postDescription}
                 onChange={(e) => handlePost(e)}
               />
@@ -52,8 +68,13 @@ const Posts = () => {
             ? posts.map((post) => {
                 return (
                   <PostComponent
-                    user={post.user}
+                    user={post.name}
                     caption={post.postDescription}
+                    likes={post.likes}
+                    comments={post.comments}
+                    currentUser={profileUser}
+                    id={post._id}
+                    token={token}
                   />
                 );
               })

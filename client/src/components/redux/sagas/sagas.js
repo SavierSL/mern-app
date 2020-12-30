@@ -1,6 +1,6 @@
 import { all, put, takeEvery, call } from "redux-saga/effects";
 import { v4 as uuidv4 } from "uuid";
-import axios from "axios";
+
 import * as type from "../actions/types";
 
 //setAlert
@@ -595,6 +595,48 @@ function* watchGetAllPostSaga() {
   yield takeEvery(type.GET_ALL_POST_SAGA, getAllPostSaga);
 }
 
+//POST A COMMENT
+const postComment = async (text, token, postID) => {
+  console.log(text);
+  console.log(postID);
+  console.log(token);
+  const url = `api/post/comment/${postID}`;
+  const content = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-auth-token": token,
+    },
+    body: JSON.stringify(text),
+  };
+  const data = await fetch(url, content)
+    .then(async (res) => {
+      const data = await res.json();
+      console.log(data);
+      return data;
+    })
+    .catch((e) => {
+      console.log(e);
+      throw e;
+    });
+  return data;
+};
+function* postCommentSaga(action) {
+  const { text, token, postID } = action.payload;
+  try {
+    const res = yield postComment(text, token, postID);
+    if (res.hasOwnProperty("errors")) {
+      return yield put({ type: type.POST_COMMENT_FAILED, payload: res });
+    }
+    yield put({ type: type.POST_COMMENT_SUCCESS, payload: res });
+  } catch (error) {
+    yield put({ type: type.POST_COMMENT_FAILED, payload: error });
+  }
+}
+function* watchPostCommentSaga() {
+  yield takeEvery(type.POST_COMMENT_SAGA, postCommentSaga);
+}
+
 export default function* rootSaga() {
   yield all([
     watchSetAlertSaga(),
@@ -618,5 +660,6 @@ export default function* rootSaga() {
     watchgetProfileByIDSaga(),
     watchPostSaga(),
     watchGetAllPostSaga(),
+    watchPostCommentSaga(),
   ]);
 }

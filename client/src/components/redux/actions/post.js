@@ -13,3 +13,9 @@ export const getAllPosts = (token) => {
     payload: { token },
   };
 };
+export const postComment = (text, token, postID) => {
+  return {
+    type: types.POST_COMMENT_SAGA,
+    payload: { text, token, postID },
+  };
+};

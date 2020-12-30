@@ -1,7 +1,7 @@
 import * as types from "../actions/types";
 
 const initialState = {
-  profile: null,
+  profile: [],
   loading: true,
   deleteMsg: null,
   errors: [],

@@ -3,11 +3,13 @@ const initialState = {
   isLoading: true,
   posts: [],
   errors: [],
+  likes: [],
+  comments: [],
 };
 
 export default function post(state = initialState, action) {
   const { type, payload } = action;
-  console.log(payload);
+
   switch (type) {
     case types.POST_SUCCESS: {
       return {
@@ -32,6 +34,21 @@ export default function post(state = initialState, action) {
     case types.GET_ALL_POST_FAILED: {
       return {
         ...state,
+        isLoading: false,
+        errors: [payload],
+      };
+    }
+    case types.POST_COMMENT_SUCCESS: {
+      return {
+        ...state,
+        isLoading: false,
+        comments: payload,
+      };
+    }
+    case types.POST_COMMENT_FAILED: {
+      return {
+        ...state,
+        isLoading: false,
         errors: [payload],
       };
     }
