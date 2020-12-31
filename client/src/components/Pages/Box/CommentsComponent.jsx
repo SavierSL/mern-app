@@ -1,6 +1,6 @@
 import React from "react";
 
-const CommentsComponent = ({ comments }) => {
+const CommentsComponent = ({ comments, sameID }) => {
   return (
     <>
       <div className="comments">
@@ -11,7 +11,7 @@ const CommentsComponent = ({ comments }) => {
               <span>{comment.name}</span>
               <div className="comments__detailsContainer">
                 <p>{comment.text}</p>
-                <button>Del</button>
+                {comment.user === sameID ? <button>Del</button> : ""}
               </div>
             </>
           );

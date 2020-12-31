@@ -9,17 +9,18 @@ import Experience from "./components/Pages/DashboardEdits/Experience";
 import UpdateProfile from "./components/Pages/UpdateProfile";
 import Profiles from "./components/Pages/Profiles";
 import Profile from "./components/Pages/Profile";
-import Nav from "./components/Layout/Nav";
+import PrivateNav from "./components/Layout/PrivateNav";
 import Posts from "./components/Pages/Posts";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 
 import store from "../src/components/redux/store";
+
 const App = () => {
   return (
     <Provider store={store}>
       <Router>
-        <Route path="/:dashboard" component={Nav} />
+        <PrivateNav />
         <Route exact path="/" component={Header} />
         <Switch>
           <Route exact path="/register" component={Register} />

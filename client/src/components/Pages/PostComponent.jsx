@@ -29,7 +29,6 @@ const PostComponent = ({
   const isLiked = likes.filter((item) => {
     return item._id === userID;
   });
-  console.log(isLiked);
 
   const handleComment = (e) => {
     e.preventDefault();
@@ -72,7 +71,11 @@ const PostComponent = ({
             </button>
           </div>
         </div>
-        {isComment ? <CommentsComponent comments={comments} /> : ""}
+        {isComment ? (
+          <CommentsComponent comments={comments} sameID={userID} />
+        ) : (
+          ""
+        )}
         <span>{currentUser}</span>{" "}
         <input
           type="text"

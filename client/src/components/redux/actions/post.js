@@ -26,3 +26,5 @@ export const likeComment = (token, id) => {
     payload: { token, id },
   };
 };
+
+export const deleteComment = () => {};
