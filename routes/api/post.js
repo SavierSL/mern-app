@@ -52,8 +52,8 @@ router.delete("/:post_id", auth, async (req, res) => {
   }
 });
 
-//@route     DELETE api/post/:post_id
-//@desc      DELETE a post
+//@route     LIKE api/post/:post_id
+//@desc      LIKE a post
 //@access    Public
 router.put("/:post_id", auth, async (req, res) => {
   try {

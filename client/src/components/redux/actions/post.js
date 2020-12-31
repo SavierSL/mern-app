@@ -19,3 +19,10 @@ export const postComment = (text, token, postID) => {
     payload: { text, token, postID },
   };
 };
+
+export const likeComment = (token, id) => {
+  return {
+    type: types.LIKE_POST_SAGA,
+    payload: { token, id },
+  };
+};

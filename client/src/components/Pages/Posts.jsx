@@ -21,7 +21,7 @@ const Posts = () => {
 
   const profileUser = useSelector((state) => {
     if (state.dashboard.profile.hasOwnProperty("user")) {
-      return state.dashboard.profile.user.name;
+      return state.dashboard.profile.user;
     } else {
       return "";
     }
@@ -29,7 +29,6 @@ const Posts = () => {
   // state.dashboard.profile.user.name != null
   //   ? state.dashboard.profile.user.name
   //   : ""
-  console.log(posts);
   const { postDescription } = post;
   const handlePost = (e) => {
     e.preventDefault();
@@ -72,9 +71,10 @@ const Posts = () => {
                     caption={post.postDescription}
                     likes={post.likes}
                     comments={post.comments}
-                    currentUser={profileUser}
+                    currentUser={profileUser.name}
                     id={post._id}
                     token={token}
+                    userID={profileUser._id}
                   />
                 );
               })

@@ -52,6 +52,20 @@ export default function post(state = initialState, action) {
         errors: [payload],
       };
     }
+    case types.LIKE_POST_SUCCESS: {
+      return {
+        ...state,
+        isLoading: false,
+        errors: [],
+      };
+    }
+    case types.LIKE_POST_FAILED: {
+      return {
+        ...state,
+        isLoading: false,
+        errors: [payload],
+      };
+    }
     default: {
       return state;
     }

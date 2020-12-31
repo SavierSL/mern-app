@@ -571,7 +571,6 @@ const getAllPost = async (token) => {
   const data = await fetch(url, content)
     .then(async (res) => {
       const data = await res.json();
-      console.log(data);
       return data;
     })
     .catch((e) => {
@@ -637,6 +636,43 @@ function* watchPostCommentSaga() {
   yield takeEvery(type.POST_COMMENT_SAGA, postCommentSaga);
 }
 
+//LIKE A POST
+const likePost = async (token, id) => {
+  const url = `api/post/${id}`;
+  const content = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "x-auth-token": token,
+    },
+  };
+  const data = await fetch(url, content)
+    .then(async (res) => {
+      const data = await res.json();
+      console.log(data);
+      return data;
+    })
+    .catch((e) => {
+      throw e;
+    });
+  return data;
+};
+function* likePostSaga(action) {
+  const { token, id } = action.payload;
+  try {
+    const res = yield likePost(token, id);
+    if (res.hasOwnProperty("errors")) {
+      return yield put({ type: type.LIKE_POST_FAILED, payload: res });
+    }
+    yield put({ type: type.LIKE_POST_SUCCESS, payload: res });
+  } catch (error) {
+    return yield put({ type: type.LIKE_POST_FAILED, payload: error });
+  }
+}
+function* watchLikePostSaga() {
+  yield takeEvery(type.LIKE_POST_SAGA, likePostSaga);
+}
+
 export default function* rootSaga() {
   yield all([
     watchSetAlertSaga(),
@@ -661,5 +697,6 @@ export default function* rootSaga() {
     watchPostSaga(),
     watchGetAllPostSaga(),
     watchPostCommentSaga(),
+    watchLikePostSaga(),
   ]);
 }
