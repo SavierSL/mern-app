@@ -21,3 +21,20 @@
     font-weight: 500;
   }
 }
+
+.btn-secondary {
+  border: none;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin: 1rem;
+  color: $tertiary-color;
+  background: none;
+  cursor: pointer;
+  &:hover {
+    color: darken($tertiary-color, 10%);
+  }
+}
+
+.btn-tertiary {
+  border: none;
+}

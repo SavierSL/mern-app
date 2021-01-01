@@ -3,13 +3,21 @@
   &__profile {
     padding: 2rem;
     background: rgb(223, 244, 250);
-    height: 15rem;
+    height: 100%;
     margin-top: 2rem;
     display: flex;
     align-items: center;
     -webkit-box-shadow: 0 10px 6px -6px #777;
     -moz-box-shadow: 0 10px 6px -6px #777;
     box-shadow: 0 8px 6px -6px #777;
+    @include respond(phone) {
+      flex-direction: column;
+      justify-content: center;
+    }
+    @include respond(tab-port) {
+      flex-direction: column;
+      justify-content: center;
+    }
     &-img {
       height: 8rem;
       border-radius: 100%;
@@ -17,6 +25,7 @@
     &-details {
       margin-left: 5rem;
       width: 20rem;
+
       button {
         padding: 1rem;
         border: none;
@@ -25,15 +34,49 @@
         color: white;
         cursor: pointer;
       }
+      @include respond(phone) {
+        margin-left: 0rem;
+        text-align: center;
+      }
+      @include respond(tab-port) {
+        margin-left: 0rem;
+        text-align: center;
+      }
     }
     &-skills {
       margin-left: 8rem;
       display: flex;
       align-items: center;
+
+      @include respond(phone) {
+        margin-left: 0rem;
+      }
+      @include respond(tab-port) {
+        margin-left: 0rem;
+      }
       p {
         color: $secondary-color;
         font-weight: 700;
         margin-left: 2rem;
+      }
+      @include respond(phone) {
+        flex-direction: column;
+        justify-content: center;
+        margin-left: 0rem;
+        margin-top: 1rem;
+        p {
+          margin-top: 1rem;
+          margin-left: 0rem;
+        }
+      }
+      @include respond(tab-port) {
+        flex-direction: column;
+        justify-content: center;
+        margin-left: 0rem;
+        p {
+          margin-top: 1rem;
+          margin-left: 0rem;
+        }
       }
     }
   }

@@ -1,22 +1,77 @@
 .posts {
-  padding: 5rem;
+  padding: 5rem 20rem 0 20rem;
+  @include respond(phone) {
+    padding: 1rem;
+  }
+  @include respond(tab-port) {
+    padding: 5rem 10rem 0 10rem;
+  }
 }
 .postComponent {
   padding: 4rem;
-  background: rgb(240, 240, 240);
+  border-radius: 1rem;
+  border: solid rgb(252, 201, 201);
+
   h3 {
-    margin-top: 2rem;
+    margin-top: 1rem;
   }
-  margin-top: 2rem;
+  margin-top: 1rem;
   &__buttonContainer {
-    margin-top: 2rem;
+    margin-top: 1rem;
     align-items: center;
     margin-bottom: 2rem;
     display: flex;
     &-group {
-      margin-right: 5rem;
+      margin-right: 1rem;
       display: flex;
       align-items: center;
+    }
+  }
+}
+
+.comment-container {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.profile-primary {
+  height: 4rem;
+  border-radius: 100%;
+}
+
+//comments box
+.comments {
+  margin-top: 1rem;
+  &__detailsContainer {
+    margin-top: 1rem;
+    span {
+      font-weight: 700;
+    }
+    &-comment {
+      display: flex;
+      width: 100%;
+
+      margin-bottom: 2rem;
+
+      p {
+        background: rgb(26, 26, 26);
+        color: #fff;
+        padding: 1rem;
+        border-radius: 1rem;
+      }
+      button {
+        margin-left: 1rem;
+        background: none;
+        color: $delete-color;
+        border: none;
+        padding: 0 1rem 0 1rem;
+        border-radius: 1rem;
+        cursor: pointer;
+        &:hover {
+          color: darken($delete-color, 10%);
+        }
+      }
     }
   }
 }

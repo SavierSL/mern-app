@@ -100,21 +100,23 @@ const Dashboard = () => {
                 } = data;
                 return (
                   <>
-                    <EducationCredetials
-                      key={_id}
-                      id={_id}
-                      from={from}
-                      to={to}
-                      school={school}
-                      current={current}
-                      description={description}
-                      degree={degree}
-                    />
-                    <div
-                      onClick={() => handleDeleteButtonEd(_id)}
-                      className="Credentials__table-delete"
-                    >
-                      <h1>DEL</h1>
+                    <div className="Credentials__table-two">
+                      <EducationCredetials
+                        key={_id}
+                        id={_id}
+                        from={from}
+                        to={to}
+                        school={school}
+                        current={current}
+                        description={description}
+                        degree={degree}
+                      />
+                      <div
+                        onClick={() => handleDeleteButtonEd(_id)}
+                        className="Credentials__table-delete"
+                      >
+                        <h1>DELETE</h1>
+                      </div>
                     </div>
                   </>
                 );
@@ -139,22 +141,24 @@ const Dashboard = () => {
                 } = data;
                 return (
                   <>
-                    <ExperienceCredentials
-                      key={_id}
-                      id={_id}
-                      from={from}
-                      to={to}
-                      company={company}
-                      current={current}
-                      description={description}
-                      degree={location}
-                      title={title}
-                    />
-                    <div
-                      onClick={() => handleDeleteButtonExp(_id)}
-                      className="Credentials__table-delete"
-                    >
-                      <h1>DEL</h1>
+                    <div className="Credentials__table-two">
+                      <ExperienceCredentials
+                        key={_id}
+                        id={_id}
+                        from={from}
+                        to={to}
+                        company={company}
+                        current={current}
+                        description={description}
+                        degree={location}
+                        title={title}
+                      />
+                      <div
+                        onClick={() => handleDeleteButtonExp(_id)}
+                        className="Credentials__table-delete"
+                      >
+                        <h1>DEL</h1>
+                      </div>
                     </div>
                   </>
                 );

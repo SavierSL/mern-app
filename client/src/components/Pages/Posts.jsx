@@ -75,6 +75,7 @@ const Posts = () => {
                     id={post._id}
                     token={token}
                     userID={profileUser._id}
+                    avatar={profileUser.avatar}
                   />
                 );
               })

@@ -61,7 +61,9 @@ const Profile = () => {
 
                   <button onClick={(e) => handleExpBtn(e)}>Experience</button>
                 </div>
-                {educationTab ? <EducationTab /> : <ExperienceTab />}
+                <div className="profile__container-details-creden">
+                  {educationTab ? <EducationTab /> : <ExperienceTab />}
+                </div>
               </div>
             </div>
           </>

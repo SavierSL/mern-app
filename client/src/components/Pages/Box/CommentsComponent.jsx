@@ -7,13 +7,13 @@ const CommentsComponent = ({ comments, sameID }) => {
         <h2>Comments</h2>
         {comments.map((comment) => {
           return (
-            <>
+            <div className="comments__detailsContainer">
               <span>{comment.name}</span>
-              <div className="comments__detailsContainer">
+              <div className="comments__detailsContainer-comment">
                 <p>{comment.text}</p>
-                {comment.user === sameID ? <button>Del</button> : ""}
+                {comment.user === sameID ? <button>delete</button> : ""}
               </div>
-            </>
+            </div>
           );
         })}
       </div>

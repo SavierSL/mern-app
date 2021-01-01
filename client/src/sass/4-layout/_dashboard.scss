@@ -1,5 +1,7 @@
 .dashboard {
   padding: 5rem;
+  text-align: center;
+
   @mixin link {
     cursor: pointer;
     position: absolute;
@@ -15,45 +17,22 @@
   }
   &__editProfile {
     display: flex;
+    justify-content: center;
+    @include respond(phone) {
+      flex-direction: column;
+    }
     button:not(:first-child) {
       margin-left: 1rem;
+      @include respond(phone) {
+        margin-left: 0;
+      }
     }
     button {
       width: 25rem;
-    }
-  }
-}
-
-.Credentials {
-  margin-top: 3rem;
-  &__table {
-    margin-top: 2rem;
-    display: flex;
-    &-delete {
-      width: 10rem;
-      background: $secondary-color;
-      text-align: center;
-      align-items: center;
-      position: relative;
-      display: flex;
-      justify-content: center;
-      color: white;
-      cursor: pointer;
-      &:hover {
-        background: red;
-      }
-    }
-    &-grp {
-      width: 25rem;
-      margin-right: 1rem;
-      background: rgb(255, 250, 250);
-      h2 {
-        margin: 3rem 0 3rem 0;
-        padding: 1rem;
-      }
-      &-title {
-        background: rgb(159, 249, 255);
-        padding: 1rem;
+      @include respond(phone) {
+        width: 100%;
+        margin: 1rem;
+        margin-left: 0;
       }
     }
   }

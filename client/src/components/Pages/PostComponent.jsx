@@ -14,6 +14,7 @@ const PostComponent = ({
   id,
   token,
   userID,
+  avatar,
 }) => {
   const [isComment, setIsComment] = useState(false);
 
@@ -34,7 +35,8 @@ const PostComponent = ({
     e.preventDefault();
     setText({ ...text, [e.target.name]: e.target.value });
   };
-  const handlePostComment = () => {
+  const handlePostComment = (e) => {
+    e.preventDefault();
     dispatch(postComment(text, token, id));
     setText({ text: "" });
     setClicked((click += 1));
@@ -59,15 +61,18 @@ const PostComponent = ({
         <h3>{caption}</h3>
         <div className="postComponent__buttonContainer">
           <div className="postComponent__buttonContainer-group">
-            <p>{`Likes ${likes.length}`}</p>
-            <button onClick={(e) => handleLikeBtn(e)}>
-              {isLiked.length !== 0 ? "Liked" : "Like"}
+            <button className="btn-secondary" onClick={(e) => handleLikeBtn(e)}>
+              {isLiked.length !== 0
+                ? `Liked ${likes.length}`
+                : `Likes ${likes.length}`}
             </button>
           </div>
           <div className="postComponent__buttonContainer-group">
-            <p>{`Comments ${comments.length}`}</p>
-            <button onClick={(e) => handleViewCommentBtn(e)}>
-              View Comments
+            <button
+              className="btn-secondary"
+              onClick={(e) => handleViewCommentBtn(e)}
+            >
+              {`Comments ${comments.length}`}
             </button>
           </div>
         </div>
@@ -76,15 +81,22 @@ const PostComponent = ({
         ) : (
           ""
         )}
-        <span>{currentUser}</span>{" "}
-        <input
-          type="text"
-          name="text"
-          value={text.text}
-          placeholder="write comment"
-          onChange={(e) => handleComment(e)}
-        />
-        <button onClick={(e) => handlePostComment(e)}>post comment</button>
+        <form action="" onSubmit={(e) => handlePostComment(e)}>
+          <div className="comment-container">
+            <span>
+              <img className="profile-primary" src={avatar} alt="" />
+            </span>{" "}
+            <input
+              className="input-primary"
+              type="text"
+              name="text"
+              value={text.text}
+              placeholder="write comment"
+              onChange={(e) => handleComment(e)}
+            />
+            <button className="btn-tertiary"></button>
+          </div>
+        </form>
       </div>
     </>
   );
